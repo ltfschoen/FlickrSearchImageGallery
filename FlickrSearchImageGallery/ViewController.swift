@@ -8,7 +8,7 @@
 
 import UIKit
 
-// Constants
+/// Constants
 let ENDPOINT_URL = "https://api.flickr.com/services/rest/"
 let METHOD_NAME = "flickr.photos.search&"
 let API_KEY = valueForAPIKey(named:"API_KEY_FLICKR")
@@ -95,8 +95,9 @@ class ViewController: UIViewController {
     // MARK: - API Search Methods
 
     /**
-    *  Request random page from Flickr API. Call separate method to get image from random page
-    */
+     *  Request random page from Flickr API. Call separate method to
+     *  get image from random page
+     */
     func getImageFromFlickrBySearch(methodArguments: [String : AnyObject]) {
         print("getImageFromFlickrBySearch with: \(methodArguments)")
 
@@ -123,13 +124,13 @@ class ViewController: UIViewController {
                     if let totalPages = photosDictionary["pages"] as? Int {
 
                         /**
-                        *  Note: Flickr API allows up to 4000 images when queries are
-                        *  paginated by temporal range or bounding box to limit queries
-                        *  in the response.
-                        *
-                        *  Here we restrict the total pages to a max of 40 and selecting a
-                        *  random page, which may have around 100 images.
-                        */
+                         *  Note: Flickr API allows up to 4000 images when queries are
+                         *  paginated by temporal range or bounding box to limit queries
+                         *  in the response.
+                         *
+                         *  Here we restrict the total pages to a max of 40 and selecting a
+                         *  random page, which may have around 100 images.
+                         */
 
                         let pageLimit = min(totalPages, 40)
                         print("page limit is: \(pageLimit)")
@@ -262,8 +263,8 @@ class ViewController: UIViewController {
     // MARK: - Gesture Methods
 
     /**
-    *  Dismiss keyboard when tap outside textfield
-    */
+     *  Dismiss keyboard when tap outside textfield
+     */
     func handleSingleTap() {
         backgroundView.endEditing(true)
     }
@@ -271,8 +272,8 @@ class ViewController: UIViewController {
     // MARK: - Keyboard Event Subscriber Methods (UIKeyboard Pub/Sub Pattern)
 
     /**
-    *  Selector Methods - Shift view when keyboard transitions in/out and covers text field
-    */
+     *  Selector Methods - Shift view when keyboard transitions in/out and covers text field
+     */
     func keyboardWillShow(notification: NSNotification) {
         if keywordTextField.isFirstResponder() {
             backgroundView.frame.origin.y -= getKeyboardHeight(notification)
@@ -301,16 +302,18 @@ class ViewController: UIViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
 
-    // MARK: - Keyboard Private Methods
-
+    // MARK: - Keyboard Public Methods
+    
     /**
     *  Dismiss keyboard
     */
-    private func dismissKeyboard() {
+    func dismissKeyboard() {
         for textField in allTextFields {
             textField.resignFirstResponder()
         }
     }
+
+    // MARK: - Keyboard Private Methods
 
     /**
      *  Obtain height of keyboard in view
@@ -320,16 +323,5 @@ class ViewController: UIViewController {
         let userInfo = notification.userInfo // Dictionary
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
         return keyboardSize.CGRectValue().height
-    }
-}
-
-// MARK: - Extensions Methods for View Controller
-
-/**
- * Dismiss any visible keyboard
- */
-extension ViewController {
-    func dismissAnyVisibleKeyboard() {
-        dismissKeyboard()
     }
 }

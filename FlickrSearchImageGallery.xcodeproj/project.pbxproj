@@ -17,6 +17,7 @@
 		49721E5B1CC99D53007B0DCB /* TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49721E5A1CC99D53007B0DCB /* TextFieldDelegate.swift */; };
 		49721E5D1CC9B7D4007B0DCB /* ApiKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49721E5C1CC9B7D4007B0DCB /* ApiKeys.plist */; };
 		49721E5F1CC9B9E1007B0DCB /* ApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49721E5E1CC9B9E1007B0DCB /* ApiKeys.swift */; };
+		49721E651CC9E8DB007B0DCB /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49721E641CC9E8DB007B0DCB /* ViewControllerExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		49721E5A1CC99D53007B0DCB /* TextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldDelegate.swift; sourceTree = "<group>"; };
 		49721E5C1CC9B7D4007B0DCB /* ApiKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ApiKeys.plist; sourceTree = "<group>"; };
 		49721E5E1CC9B9E1007B0DCB /* ApiKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiKeys.swift; sourceTree = "<group>"; };
+		49721E641CC9E8DB007B0DCB /* ViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 		49721E2B1CC995F2007B0DCB /* FlickrSearchImageGallery */ = {
 			isa = PBXGroup;
 			children = (
+				49721E631CC9E8CA007B0DCB /* Extensions */,
 				49721E2C1CC995F2007B0DCB /* AppDelegate.swift */,
 				49721E2E1CC995F2007B0DCB /* ViewController.swift */,
 				49721E5C1CC9B7D4007B0DCB /* ApiKeys.plist */,
@@ -132,6 +135,14 @@
 				49721E4E1CC995F2007B0DCB /* Info.plist */,
 			);
 			path = FlickrSearchImageGalleryUITests;
+			sourceTree = "<group>";
+		};
+		49721E631CC9E8CA007B0DCB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				49721E641CC9E8DB007B0DCB /* ViewControllerExtension.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,6 +280,7 @@
 				49721E2F1CC995F2007B0DCB /* ViewController.swift in Sources */,
 				49721E2D1CC995F2007B0DCB /* AppDelegate.swift in Sources */,
 				49721E5F1CC9B9E1007B0DCB /* ApiKeys.swift in Sources */,
+				49721E651CC9E8DB007B0DCB /* ViewControllerExtension.swift in Sources */,
 				49721E5B1CC99D53007B0DCB /* TextFieldDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

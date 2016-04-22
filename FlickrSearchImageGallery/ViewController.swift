@@ -56,21 +56,29 @@ class ViewController: UIViewController {
 
     @IBAction func searchByKeyword(sender: AnyObject) {
 
-        let methodArguments = [
-            "method": METHOD_NAME,
-            "api_key": API_KEY,
-            "extras": EXTRAS,
-            "format": DATA_FORMAT,
-            "text": keywordTextField.text as! AnyObject,
-            "nojsoncallback": NO_JSON_CALLBACK
-        ]
+         if keywordTextField.text != "" {
 
-        dismissAnyVisibleKeyboard() // Dismiss keyboard before search
+            let methodArguments = [
+                "method": METHOD_NAME,
+                "api_key": API_KEY,
+                "extras": EXTRAS,
+                "format": DATA_FORMAT,
+                "text": keywordTextField.text as! AnyObject,
+                "nojsoncallback": NO_JSON_CALLBACK
+            ]
 
-        FlickrAPI.sharedInstance.getImageFromFlickrBySearch(methodArguments)
+            dismissAnyVisibleKeyboard() // Dismiss keyboard before search
 
-        // Subscribe to a notification that fires upon Flickr Client response.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "processFlickrResponse:", name: FlickrClientProcessResponseNotification, object: nil)
+            FlickrAPI.sharedInstance.getImageFromFlickrBySearch(methodArguments)
+
+            // Subscribe to a notification that fires upon Flickr Client response.
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "processFlickrResponse:", name: FlickrClientProcessResponseNotification, object: nil)
+        } else {
+
+            dispatch_async(dispatch_get_main_queue(), {
+                self.notificationLabel.text = "Error (input field empty)"
+            })
+        }
     }
 
     // MARK: - API Response Methods

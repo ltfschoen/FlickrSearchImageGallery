@@ -17,7 +17,14 @@ let EXTRAS = "url_m"
 let DATA_FORMAT = "json"
 let NO_JSON_CALLBACK = "1"
 
-class ViewController: UIViewController {
+class ViewController: UICollectionViewController {
+
+    var collectionImages: [String] = []
+
+    // MARK: - Collection View Constants
+    private let reuseIdentifier = "Cell"
+
+    @IBOutlet var collectionImageView: UICollectionView!
 
     @IBOutlet weak var flickrImageView: UIImageView!
     @IBOutlet weak var keywordTextField: UITextField!
@@ -40,13 +47,11 @@ class ViewController: UIViewController {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        subscribeToKeyboardNotifications()
     }
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         backgroundView.removeGestureRecognizer(recognizer)
-        unsubscribeFromKeyboardNotifications()
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,24 +61,30 @@ class ViewController: UIViewController {
 
     @IBAction func searchByKeyword(sender: AnyObject) {
 
-        let methodArguments = [
-            "method": METHOD_NAME,
-            "api_key": API_KEY,
-            "extras": EXTRAS,
-            "format": DATA_FORMAT,
-            "text": keywordTextField.text as! AnyObject,
-            "nojsoncallback": NO_JSON_CALLBACK
-        ]
+        if keywordTextField.text != "" {
+            
+            let methodArguments = [
+                "method": METHOD_NAME,
+                "api_key": API_KEY,
+                "extras": EXTRAS,
+                "format": DATA_FORMAT,
+                "text": keywordTextField.text as! AnyObject,
+                "nojsoncallback": NO_JSON_CALLBACK
+            ]
 
-        dismissAnyVisibleKeyboard() // Dismiss keyboard before search
+            FlickrAPI.sharedInstance.getImageFromFlickrBySearch(methodArguments)
 
-        FlickrAPI.sharedInstance.getImageFromFlickrBySearch(methodArguments)
-
-        // Subscribe to a notification that fires upon Flickr Client response.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "processFlickrResponse:", name: FlickrClientProcessResponseNotification, object: nil)
+            // Subscribe to a notification that fires upon Flickr Client response.
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "processFlickrResponse:", name: FlickrClientProcessResponseNotification, object: nil)
+        } else {
+            dispatch_async(dispatch_get_main_queue(), {
+                self.notificationLabel.text = "Error (input field empty)"
+            })
+        }
     }
 
     // MARK: - API Response Methods
+
     /**
     *  Process notifications after Flickr Client query
     */
@@ -113,59 +124,4 @@ class ViewController: UIViewController {
         backgroundView.endEditing(true)
     }
 
-    // MARK: - Keyboard Event Subscriber Methods (UIKeyboard Pub/Sub Pattern)
-
-    /**
-     *  Selector Methods - Shift view when keyboard transitions in/out and covers text field
-     */
-    func keyboardWillShow(notification: NSNotification) {
-        if keywordTextField.isFirstResponder() {
-            backgroundView.frame.origin.y -= getKeyboardHeight(notification)
-        }
-    }
-
-    func keyboardWillHide(notification: NSNotification) {
-        if keywordTextField.isFirstResponder() {
-            backgroundView.frame.origin.y += getKeyboardHeight(notification)
-        }
-    }
-
-    /**
-     *  Observer Methods - Observe for subscribe/unsubscribe event notifications to
-     *                     show/hide keyboard by calling appropriate selector method
-     */
-    func subscribeToKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
-    }
-
-    func unsubscribeFromKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-    }
-
-    // MARK: - Keyboard Public Methods
-    
-    /**
-    *  Dismiss keyboard
-    */
-    func dismissKeyboard() {
-        for textField in allTextFields {
-            textField.resignFirstResponder()
-        }
-    }
-
-    // MARK: - Keyboard Private Methods
-
-    /**
-     *  Obtain height of keyboard in view
-     */
-    private func getKeyboardHeight(notification: NSNotification) -> CGFloat {
-        
-        let userInfo = notification.userInfo // Dictionary
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        return keyboardSize.CGRectValue().height
-    }
 }

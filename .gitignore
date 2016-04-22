@@ -37,3 +37,5 @@ playground.xcworkspace
 .build/
 
 .DS_Store
+
+ApiKeys.plist

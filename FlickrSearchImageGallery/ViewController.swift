@@ -19,9 +19,17 @@ let NO_JSON_CALLBACK = "1"
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var flickrImageView: UIImageView!
+    @IBOutlet weak var flickrImageView1: UIImageView!
+    @IBOutlet weak var flickrImageView2: UIImageView!
+    @IBOutlet weak var flickrImageView3: UIImageView!
+    @IBOutlet weak var flickrImageView4: UIImageView!
+
+    @IBOutlet weak var flickrImageNameLabel1: UILabel!
+    @IBOutlet weak var flickrImageNameLabel2: UILabel!
+    @IBOutlet weak var flickrImageNameLabel3: UILabel!
+    @IBOutlet weak var flickrImageNameLabel4: UILabel!
+
     @IBOutlet weak var keywordTextField: UITextField!
-    @IBOutlet weak var imageNameLabel: UILabel!
     @IBOutlet weak var notificationLabel: UILabel!
     @IBOutlet var backgroundView: UIView!
 
@@ -95,20 +103,88 @@ class ViewController: UIViewController {
 
             self.notificationLabel.text = response?["notification"] as? String
 
-            if let responseImage = response?["image"] {
-                if responseImage as! String != "" {
-                    let imageURL = NSURL(string: responseImage as! String)
+            // Only process responses where image exists
+            if response!["image"] as! String != "" {
 
-                    if let imageData = NSData(contentsOfURL: imageURL!) {
-                        self.flickrImageView.image = UIImage(data: imageData)
+                /// Update Images in UI
+                
+                if let responseImage1 = response!["image"] {
+                    // Update Image 1
+                    if responseImage1 as! String != "" {
+                        let imageURL1 = NSURL(string: responseImage1 as! String)
+                        if let imageData1 = NSData(contentsOfURL: imageURL1!) {
+                            self.flickrImageView1.image = UIImage(data: imageData1)
+                        }
+                    }
+                }
+
+                if let responseImage2 = response?["image2"] {
+                    // Update Image 2
+                    if responseImage2 as! String != "" {
+                        let imageURL2 = NSURL(string: responseImage2 as! String)
+                        if let imageData2 = NSData(contentsOfURL: imageURL2!) {
+                            self.flickrImageView2.image = UIImage(data: imageData2)
+                        }
+                    }
+                }
+
+                if let responseImage3 = response?["image3"] {
+                    // Update Image 3
+                    if responseImage3 as! String != "" {
+                        let imageURL3 = NSURL(string: responseImage3 as! String)
+                        if let imageData3 = NSData(contentsOfURL: imageURL3!) {
+                            self.flickrImageView3.image = UIImage(data: imageData3)
+                        }
+                    }
+                }
+
+                if let responseImage4 = response?["image4"] {
+                    // Update Image 4
+                    if responseImage4 as! String != "" {
+                        let imageURL4 = NSURL(string: responseImage4 as! String)
+                        if let imageData4 = NSData(contentsOfURL: imageURL4!) {
+                            self.flickrImageView4.image = UIImage(data: imageData4)
+                        }
                     }
                 }
             }
-            if let responseImageTitle = response?["imageTitle"] {
-                if responseImageTitle as! String != "" {
-                    self.imageNameLabel.text = responseImageTitle as? String
+
+            // Only process responses where image title exists
+            if response!["imageTitle"] as! String != "" {
+
+                /// Update Image Titles in UI
+
+                if let responseImageTitle1 = response?["imageTitle"] {
+
+                    // Update Image Title 1
+                    if responseImageTitle1 as! String != "" {
+                        self.flickrImageNameLabel1.text = responseImageTitle1 as? String
+                    }
+                }
+                
+                if let responseImageTitle2 = response?["imageTitle2"] {
+
+                    // Update Image Title 2
+                    if responseImageTitle2 as! String != "" {
+                        self.flickrImageNameLabel2.text = responseImageTitle2 as? String
+                    }
+                }
+
+                if let responseImageTitle3 = response?["imageTitle3"] {
+                    // Update Image Title 3
+                    if responseImageTitle3 as! String != "" {
+                        self.flickrImageNameLabel3.text = responseImageTitle3 as? String
+                    }
+                }
+                
+                if let responseImageTitle4 = response?["imageTitle4"] {
+                    // Update Image Title 4
+                    if responseImageTitle4 as! String != "" {
+                        self.flickrImageNameLabel4.text = responseImageTitle4 as? String
+                    }
                 }
             }
+
         })
     }
     

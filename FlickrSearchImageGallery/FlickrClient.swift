@@ -19,6 +19,16 @@ class FlickrClient: NSObject {
     // MARK: Properties
     var processResponse: [String: AnyObject]?
 
+    var imageUrlString1: String?
+    var imageUrlString2: String?
+    var imageUrlString3: String?
+    var imageUrlString4: String?
+    
+    var photoTitle1: String?
+    var photoTitle2: String?
+    var photoTitle3: String?
+    var photoTitle4: String?
+
     // MARK: Initialisation
 
     override init() {
@@ -158,24 +168,110 @@ class FlickrClient: NSObject {
                             print("photosArray Count is: \(photosArray.count)")
                             
                             if photosArray.count > 0 {
-                                let randomPhotoIndex = Int(arc4random_uniform(UInt32(photosArray.count)))
-                                print("randomPhotoIndex is: \(randomPhotoIndex)")
-                                let photoDictionary = photosArray[randomPhotoIndex] as [String: AnyObject]
-                                print("photoDictionary is: \(photoDictionary)")
                                 
-                                let photoTitle = photoDictionary["title"] as? String
-                                let imageUrlString = photoDictionary["url_m"] as? String
-                                let imageURL = NSURL(string: imageUrlString!)
+                                /**
+                                 *  Loop through array of photos, choose only
+                                 *  4 random photo indexes, and add them to a new array
+                                 */
+                                var randomPhotosIndexes: [Int] = []
+                                var randomPhotoIndex: Int = 0
+                                for i in 1...4 {
+                                    randomPhotoIndex = Int(arc4random_uniform(UInt32(photosArray.count)))
+                                    randomPhotosIndexes.append(randomPhotoIndex)
+                                }
+
+                                print("randomPhotoIndexes are: \(randomPhotosIndexes)")
                                 
-                                if let imageData = NSData(contentsOfURL: imageURL!) {
+                                /**
+                                 *  Loop through the initial photos array and fetch the
+                                 *  contents at the 4 random photos indexes, and add their
+                                 *  contents to a dictionary
+                                 */
+                                
+                                let photoDictionary1 = photosArray[randomPhotosIndexes[0]] as [String: AnyObject]
+                                let photoDictionary2 = photosArray[randomPhotosIndexes[1]] as [String: AnyObject]
+                                let photoDictionary3 = photosArray[randomPhotosIndexes[2]] as [String: AnyObject]
+                                let photoDictionary4 = photosArray[randomPhotosIndexes[3]] as [String: AnyObject]
+
+                                /**
+                                 *  Assign to variables for each photo in the 
+                                 *  dictionary, its title and url.
+                                 */
+
+                                if let photoTitle1 = photoDictionary1["title"] as? String {
+                                    self.photoTitle1 = photoTitle1
+                                }
+                                if let photoTitle2 = photoDictionary2["title"] as? String {
+                                    self.photoTitle2 = photoTitle2
+                                }
+                                if let photoTitle3 = photoDictionary3["title"] as? String {
+                                    self.photoTitle3 = photoTitle3
+                                }
+                                if let photoTitle4 = photoDictionary4["title"] as? String {
+                                    self.photoTitle4 = photoTitle4
+                                }
+
+                                /**
+                                 *   Get the photo dictionary URL property for each 
+                                 *   of the 4 random photos if they exist
+                                 */
+
+                                if let imageUrlString1 = photoDictionary1["url_m"] as? String {
+                                    let imageURL1 = NSURL(string: imageUrlString1)
+                                    if let imageData1 = NSData(contentsOfURL: imageURL1!) {
+                                        self.imageUrlString1 = imageUrlString1
+                                    }
+                                }
+
+                                if let imageUrlString2 = photoDictionary2["url_m"] as? String {
+                                    let imageURL2 = NSURL(string: imageUrlString2)
+                                    if let imageData2 = NSData(contentsOfURL: imageURL2!) {
+                                        self.imageUrlString2 = imageUrlString2
+                                    }
+                                }
+
+                                if let imageUrlString3 = photoDictionary3["url_m"] as? String {
+                                    let imageURL3 = NSURL(string: imageUrlString3)
+                                    if let imageData3 = NSData(contentsOfURL: imageURL3!) {
+                                        self.imageUrlString3 = imageUrlString3
+                                    }
+                                }
+
+                                if let imageUrlString4 = photoDictionary4["url_m"] as? String {
+                                    let imageURL4 = NSURL(string: imageUrlString4)
+                                    if let imageData4 = NSData(contentsOfURL: imageURL4!) {
+                                        self.imageUrlString4 = imageUrlString4
+                                    }
+                                }
+
+                                /**
+                                *   Check that at least 1 out of the 4 random photo url's
+                                *   exist before advising that images were found
+                                */
+                                
+                                if (self.imageUrlString1 != "" && self.imageUrlString2 != "" && self.imageUrlString3 != "" && self.imageUrlString4 != "") {
+
+                                    /**
+                                     *  Note: Attempted to send images and image titles
+                                     *  as an array but got error
+                                     *  "Could not cast value of type 
+                                     *  'Swift._SwiftDeferredNSArray' to 'NSString'.
+                                     *  I expect since since dictionary has strict typing
+                                     */
                                     self.processResponse = [
-                                        "notification": "Success. Found image." as AnyObject,
-                                        "image": imageUrlString!,
-                                        "imageTitle": "\(photoTitle!)"
+                                        "notification": "Success. Found image(s)." as AnyObject,
+                                        "image": self.imageUrlString1!,
+                                        "image2": self.imageUrlString2!,
+                                        "image3": self.imageUrlString3!,
+                                        "image4": self.imageUrlString4!,
+                                        "imageTitle": self.photoTitle1!,
+                                        "imageTitle2": self.photoTitle2!,
+                                        "imageTitle3": self.photoTitle3!,
+                                        "imageTitle4": self.photoTitle4!
                                     ]
                                     NSNotificationCenter.defaultCenter().postNotificationName(FlickrClientProcessResponseNotification, object: self.processResponse)
                                 } else {
-                                    print("Error (no image in response) at \(imageURL)")
+                                    print("Error (no image in response) at an image URL")
                                     self.processResponse = [
                                         "notification": "Error (no image in response). Try again." as AnyObject,
                                         "image": "",

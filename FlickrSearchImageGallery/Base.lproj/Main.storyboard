@@ -20,9 +20,6 @@
                             <view alpha="0.59999999999999998" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zKT-Ta-DnQ">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SG3-oP-U0g">
-                                        <rect key="frame" x="189" y="46" width="129" height="106"/>
-                                    </imageView>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f8a-zL-G8U">
                                         <rect key="frame" x="40" y="84" width="97" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -41,18 +38,52 @@
                                             <action selector="searchByKeyword:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3a7-Ga-fxx"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Image Name Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lNZ-Gv-qHq">
-                                        <rect key="frame" x="175" y="160" width="143" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gVY-nR-Kv3">
                                         <rect key="frame" x="40" y="14" width="278" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="93b-aY-OmY" userLabel="Flickr Image View 2">
+                                        <rect key="frame" x="174" y="160" width="163" height="140"/>
+                                        <color key="backgroundColor" red="0.52862356360085172" green="0.60000002384185791" blue="0.21279785825277422" alpha="1" colorSpace="calibratedRGB"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QT4-xV-mdx" userLabel="Flickr Image View 3">
+                                        <rect key="frame" x="8" y="303" width="164" height="133"/>
+                                        <color key="backgroundColor" red="0.52862356360085172" green="0.60000002384185791" blue="0.21279785825277422" alpha="1" colorSpace="calibratedRGB"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZvS-e7-lkV" userLabel="Flickr Image View 4">
+                                        <rect key="frame" x="174" y="303" width="163" height="133"/>
+                                        <color key="backgroundColor" red="0.52862356360085172" green="0.60000002384185791" blue="0.21279785825277422" alpha="1" colorSpace="calibratedRGB"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Image Label 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lNZ-Gv-qHq" userLabel="Flickr Image Name Label 1">
+                                        <rect key="frame" x="36" y="274" width="105" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Image Label 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UOD-Gs-QfO" userLabel="Flickr Image Name Label 2">
+                                        <rect key="frame" x="201" y="274" width="108" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Image Label 3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v6S-sf-jjC" userLabel="Flickr Image Name Label 3">
+                                        <rect key="frame" x="36" y="407" width="108" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Image Label 4" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YK1-XO-Edx" userLabel="Flickr Image Name Label 4">
+                                        <rect key="frame" x="201" y="407" width="108" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SG3-oP-U0g" userLabel="Flickr Image View 1">
+                                        <rect key="frame" x="8" y="160" width="164" height="140"/>
+                                        <color key="backgroundColor" red="0.52862356360085172" green="0.60000002384185791" blue="0.21279785825277422" alpha="1" colorSpace="calibratedRGB"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96910978619999999" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -61,8 +92,14 @@
                     </view>
                     <connections>
                         <outlet property="backgroundView" destination="zKT-Ta-DnQ" id="phc-Pf-5EF"/>
-                        <outlet property="flickrImageView" destination="SG3-oP-U0g" id="cgz-9f-cBn"/>
-                        <outlet property="imageNameLabel" destination="lNZ-Gv-qHq" id="0FR-9u-qRQ"/>
+                        <outlet property="flickrImageNameLabel1" destination="lNZ-Gv-qHq" id="igu-Hs-Kvz"/>
+                        <outlet property="flickrImageNameLabel2" destination="UOD-Gs-QfO" id="p0E-XF-qVu"/>
+                        <outlet property="flickrImageNameLabel3" destination="v6S-sf-jjC" id="aAF-az-uei"/>
+                        <outlet property="flickrImageNameLabel4" destination="YK1-XO-Edx" id="T7I-ol-oh4"/>
+                        <outlet property="flickrImageView1" destination="SG3-oP-U0g" id="vBJ-9F-mda"/>
+                        <outlet property="flickrImageView2" destination="93b-aY-OmY" id="VBZ-rX-uCE"/>
+                        <outlet property="flickrImageView3" destination="QT4-xV-mdx" id="DEt-eM-1VJ"/>
+                        <outlet property="flickrImageView4" destination="ZvS-e7-lkV" id="CEz-rV-ama"/>
                         <outlet property="keywordTextField" destination="f8a-zL-G8U" id="jHE-iM-fdP"/>
                         <outlet property="notificationLabel" destination="gVY-nR-Kv3" id="1BD-S1-Hvf"/>
                     </connections>

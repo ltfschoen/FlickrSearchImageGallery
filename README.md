@@ -1,4 +1,4 @@
-Company X Education App
+Flickr Search Image Gallery App
 ========
 
 Specification

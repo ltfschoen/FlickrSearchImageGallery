@@ -9,9 +9,9 @@
 import UIKit
 
 extension ViewController {
-
+    
     // MARK: - Extensions Methods for View Controller
-
+    
     /**
     *  Dismiss any visible keyboard
     */

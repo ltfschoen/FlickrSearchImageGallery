@@ -266,4 +266,63 @@ class ViewController: UIViewController {
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
         return keyboardSize.CGRectValue().height
     }
+
+
+    // MARK: - Segue
+
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        
+        // Only transition if the image has been loaded
+        if identifier == "ImageModalViewControllerID" {
+            let shouldTransition: Bool
+            if sender != nil {
+                shouldTransition = true
+            } else {
+                shouldTransition = false
+            }
+            return shouldTransition
+        }
+        
+        // Other segues are performed by default
+        return true
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+
+        /**
+        *  Forward the image stored in 'image' of flickrImageView properties
+        *  to the ImageModalViewController's copyOfFlickrImage properties if not nil
+        */
+
+        if segue.identifier == "ImageModalViewControllerID1" {
+            if let destinationVC = segue.destinationViewController as? ImageModalViewController {
+                if self.flickrImageView1.image != nil {
+                    destinationVC.copyOfFlickrImage1 = self.flickrImageView1.image
+                    destinationVC.segueSenderID = segue.identifier!
+                }
+            }
+        } else if segue.identifier == "ImageModalViewControllerID2" {
+            if let destinationVC = segue.destinationViewController as? ImageModalViewController {
+                if self.flickrImageView2.image != nil {
+                    destinationVC.copyOfFlickrImage2 = self.flickrImageView2.image
+                    destinationVC.segueSenderID = segue.identifier!
+                }
+            }
+        } else if segue.identifier == "ImageModalViewControllerID3" {
+            if let destinationVC = segue.destinationViewController as? ImageModalViewController {
+                if self.flickrImageView3.image != nil {
+                    destinationVC.copyOfFlickrImage3 = self.flickrImageView3.image
+                    destinationVC.segueSenderID = segue.identifier!
+                }
+            }
+        } else if segue.identifier == "ImageModalViewControllerID4" {
+            if let destinationVC = segue.destinationViewController as? ImageModalViewController {
+                if self.flickrImageView4.image != nil {
+                    destinationVC.copyOfFlickrImage4 = self.flickrImageView4.image
+                    destinationVC.segueSenderID = segue.identifier!
+                }
+            }
+        }
+        
+    }
 }

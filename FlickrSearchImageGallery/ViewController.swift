@@ -95,7 +95,7 @@ class ViewController: UIViewController {
         } else {
 
             dispatch_async(dispatch_get_main_queue(), {
-                self.notificationLabel.text = "Error (input field empty)."
+                self.notificationLabel.text = "Error (input empty)."
             })
         }
     }

@@ -3,6 +3,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,81 +19,156 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view alpha="0.59999999999999998" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zKT-Ta-DnQ">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yhx-8J-O7G">
+                                <rect key="frame" x="20" y="20" width="560" height="580"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f8a-zL-G8U">
-                                        <rect key="frame" x="40" y="84" width="97" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Keyword" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jh6-4n-q5X">
-                                        <rect key="frame" x="40" y="50" width="67" height="21"/>
+                                    <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="k4Z-TV-tCv" userLabel="Stack View - I2">
+                                        <rect key="frame" x="8" y="462" width="544" height="110"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QT4-xV-mdx" userLabel="Flickr Image View 3">
+                                                <rect key="frame" x="0.0" y="0.0" width="272" height="110"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZvS-e7-lkV" userLabel="Flickr Image View 4">
+                                                <rect key="frame" x="272" y="0.0" width="272" height="110"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="300" id="Zsf-38-9qu"/>
+                                            <constraint firstAttribute="height" constant="110" id="ar4-wV-8Xu"/>
+                                            <constraint firstAttribute="width" secondItem="k4Z-TV-tCv" secondAttribute="height" multiplier="2:1" id="bDi-Ye-DYi"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="1NL-99-5r0" userLabel="Stack View - I1">
+                                        <rect key="frame" x="8" y="337" width="544" height="110"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SG3-oP-U0g" userLabel="Flickr Image View 1">
+                                                <rect key="frame" x="0.0" y="0.0" width="272" height="110"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="93b-aY-OmY" userLabel="Flickr Image View 2">
+                                                <rect key="frame" x="272" y="0.0" width="272" height="110"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="1NL-99-5r0" secondAttribute="height" multiplier="2:1" id="0cF-WV-uMX"/>
+                                            <constraint firstAttribute="width" constant="300" id="pyy-pK-gTT"/>
+                                            <constraint firstAttribute="height" constant="110" id="wNq-pO-tKT"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Qe2-sR-6Zg" userLabel="Stack View - S">
+                                        <rect key="frame" x="5" y="5" width="550" height="33"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Keyword(s)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f8a-zL-G8U">
+                                                <rect key="frame" x="0.0" y="0.0" width="406" height="33"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysj-yo-C7e">
+                                                <rect key="frame" x="406" y="0.0" width="144" height="33"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <state key="normal" title="Search"/>
+                                                <connections>
+                                                    <action selector="searchByKeyword:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3a7-Ga-fxx"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="rbi-Ol-0KV" userLabel="Stack View - IL1">
+                                        <rect key="frame" x="8" y="337" width="544" height="125"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lNZ-Gv-qHq" userLabel="Flickr Image Name Label 1">
+                                                <rect key="frame" x="0.0" y="0.0" width="272" height="125"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="15" id="L3V-th-zgd"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.61672810300000003" green="0.91250394570000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UOD-Gs-QfO" userLabel="Flickr Image Name Label 2">
+                                                <rect key="frame" x="272" y="0.0" width="272" height="125"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.61672810300000003" green="0.91250394570000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="kNT-KK-WFI" userLabel="Stack View - IL2">
+                                        <rect key="frame" x="8" y="447" width="544" height="125"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v6S-sf-jjC" userLabel="Flickr Image Name Label 3">
+                                                <rect key="frame" x="0.0" y="0.0" width="272" height="125"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.61672810300000003" green="0.91250394570000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YK1-XO-Edx" userLabel="Flickr Image Name Label 4">
+                                                <rect key="frame" x="272" y="0.0" width="272" height="125"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="0.61672810300000003" green="0.91250394570000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gVY-nR-Kv3">
+                                        <rect key="frame" x="8" y="337" width="544" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysj-yo-C7e">
-                                        <rect key="frame" x="40" y="122" width="132" height="30"/>
-                                        <state key="normal" title="Search by Keyword"/>
-                                        <connections>
-                                            <action selector="searchByKeyword:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3a7-Ga-fxx"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gVY-nR-Kv3">
-                                        <rect key="frame" x="40" y="14" width="278" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="93b-aY-OmY" userLabel="Flickr Image View 2">
-                                        <rect key="frame" x="174" y="160" width="163" height="140"/>
-                                        <color key="backgroundColor" red="0.52862356360085172" green="0.60000002384185791" blue="0.21279785825277422" alpha="1" colorSpace="calibratedRGB"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QT4-xV-mdx" userLabel="Flickr Image View 3">
-                                        <rect key="frame" x="8" y="303" width="164" height="133"/>
-                                        <color key="backgroundColor" red="0.52862356360085172" green="0.60000002384185791" blue="0.21279785825277422" alpha="1" colorSpace="calibratedRGB"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZvS-e7-lkV" userLabel="Flickr Image View 4">
-                                        <rect key="frame" x="174" y="303" width="163" height="133"/>
-                                        <color key="backgroundColor" red="0.52862356360085172" green="0.60000002384185791" blue="0.21279785825277422" alpha="1" colorSpace="calibratedRGB"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Image Label 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lNZ-Gv-qHq" userLabel="Flickr Image Name Label 1">
-                                        <rect key="frame" x="36" y="274" width="105" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Image Label 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UOD-Gs-QfO" userLabel="Flickr Image Name Label 2">
-                                        <rect key="frame" x="201" y="274" width="108" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Image Label 3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v6S-sf-jjC" userLabel="Flickr Image Name Label 3">
-                                        <rect key="frame" x="36" y="407" width="108" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Image Label 4" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YK1-XO-Edx" userLabel="Flickr Image Name Label 4">
-                                        <rect key="frame" x="201" y="407" width="108" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SG3-oP-U0g" userLabel="Flickr Image View 1">
-                                        <rect key="frame" x="8" y="160" width="164" height="140"/>
-                                        <color key="backgroundColor" red="0.52862356360085172" green="0.60000002384185791" blue="0.21279785825277422" alpha="1" colorSpace="calibratedRGB"/>
-                                    </imageView>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Tl4-JU-PEJ">
+                                        <rect key="frame" x="262" y="272" width="37" height="37"/>
+                                        <color key="color" red="0.61672810300000003" green="0.91250394570000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </activityIndicatorView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.96910978619999999" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Qe2-sR-6Zg" secondAttribute="trailing" constant="5" id="06N-Vx-drb"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="k4Z-TV-tCv" secondAttribute="trailing" id="160-tv-YEq"/>
+                                    <constraint firstItem="Qe2-sR-6Zg" firstAttribute="top" secondItem="yhx-8J-O7G" secondAttribute="top" constant="5" id="2mQ-sF-x7A"/>
+                                    <constraint firstItem="Qe2-sR-6Zg" firstAttribute="centerX" secondItem="yhx-8J-O7G" secondAttribute="centerX" id="8aw-sA-Qf0"/>
+                                    <constraint firstItem="rbi-Ol-0KV" firstAttribute="leading" secondItem="yhx-8J-O7G" secondAttribute="leadingMargin" id="8bL-OX-hmf"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="kNT-KK-WFI" secondAttribute="trailing" id="BjQ-Cv-Bqj"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="rbi-Ol-0KV" secondAttribute="trailing" id="FaJ-Kj-1XW"/>
+                                    <constraint firstItem="kNT-KK-WFI" firstAttribute="centerX" secondItem="yhx-8J-O7G" secondAttribute="centerX" id="Gjg-UL-a6L"/>
+                                    <constraint firstItem="rbi-Ol-0KV" firstAttribute="top" secondItem="gVY-nR-Kv3" secondAttribute="bottom" id="IRY-yD-bFE"/>
+                                    <constraint firstItem="rbi-Ol-0KV" firstAttribute="centerX" secondItem="yhx-8J-O7G" secondAttribute="centerX" id="NUB-r6-i8Y"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="gVY-nR-Kv3" secondAttribute="trailing" id="Nw1-w5-5dt"/>
+                                    <constraint firstItem="1NL-99-5r0" firstAttribute="centerX" secondItem="yhx-8J-O7G" secondAttribute="centerX" id="Pz4-sU-5wp"/>
+                                    <constraint firstItem="Tl4-JU-PEJ" firstAttribute="centerX" secondItem="yhx-8J-O7G" secondAttribute="centerX" id="QP1-sF-Acd"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="1NL-99-5r0" secondAttribute="trailing" id="SUm-LW-UWC"/>
+                                    <constraint firstItem="gVY-nR-Kv3" firstAttribute="centerX" secondItem="yhx-8J-O7G" secondAttribute="centerX" id="Y90-6S-n0N"/>
+                                    <constraint firstItem="1NL-99-5r0" firstAttribute="top" secondItem="gVY-nR-Kv3" secondAttribute="bottom" constant="10" id="aEV-Yz-1hT"/>
+                                    <constraint firstItem="1NL-99-5r0" firstAttribute="leading" secondItem="yhx-8J-O7G" secondAttribute="leadingMargin" id="dy0-HZ-PvN"/>
+                                    <constraint firstItem="Qe2-sR-6Zg" firstAttribute="leading" secondItem="yhx-8J-O7G" secondAttribute="leading" constant="5" id="eLI-AC-8Dx"/>
+                                    <constraint firstItem="k4Z-TV-tCv" firstAttribute="centerX" secondItem="yhx-8J-O7G" secondAttribute="centerX" id="fGi-O1-2Wn"/>
+                                    <constraint firstItem="k4Z-TV-tCv" firstAttribute="top" secondItem="rbi-Ol-0KV" secondAttribute="bottom" id="gz4-bs-peI"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="k4Z-TV-tCv" secondAttribute="bottom" id="hVV-Dr-A8U"/>
+                                    <constraint firstItem="kNT-KK-WFI" firstAttribute="leading" secondItem="yhx-8J-O7G" secondAttribute="leadingMargin" id="mAi-c8-o3q"/>
+                                    <constraint firstItem="1NL-99-5r0" firstAttribute="top" secondItem="gVY-nR-Kv3" secondAttribute="bottom" id="mka-bH-qRp"/>
+                                    <constraint firstItem="k4Z-TV-tCv" firstAttribute="leading" secondItem="yhx-8J-O7G" secondAttribute="leadingMargin" id="oU7-RV-eos"/>
+                                    <constraint firstItem="gVY-nR-Kv3" firstAttribute="leading" secondItem="yhx-8J-O7G" secondAttribute="leadingMargin" id="rzX-dB-aTZ"/>
+                                    <constraint firstItem="Tl4-JU-PEJ" firstAttribute="centerY" secondItem="yhx-8J-O7G" secondAttribute="centerY" id="tl7-0o-lf2"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="kNT-KK-WFI" secondAttribute="bottom" id="uV6-W6-xNO"/>
+                                    <constraint firstItem="k4Z-TV-tCv" firstAttribute="top" secondItem="1NL-99-5r0" secondAttribute="bottom" constant="15" id="vGZ-na-LH1"/>
+                                    <constraint firstItem="kNT-KK-WFI" firstAttribute="top" secondItem="1NL-99-5r0" secondAttribute="bottom" id="yqk-jV-Kyl"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="yhx-8J-O7G" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="cNe-Oe-o7M"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="yhx-8J-O7G" secondAttribute="trailing" id="fCt-TB-F9S"/>
+                            <constraint firstItem="yhx-8J-O7G" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="uh5-ag-UeK"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="yhx-8J-O7G" secondAttribute="bottom" id="zyF-6e-3R0"/>
+                        </constraints>
                     </view>
                     <connections>
-                        <outlet property="backgroundView" destination="zKT-Ta-DnQ" id="phc-Pf-5EF"/>
+                        <outlet property="activitySpinner" destination="Tl4-JU-PEJ" id="ctf-RJ-YNa"/>
+                        <outlet property="backgroundView" destination="yhx-8J-O7G" id="ZP0-at-sfw"/>
                         <outlet property="flickrImageNameLabel1" destination="lNZ-Gv-qHq" id="igu-Hs-Kvz"/>
                         <outlet property="flickrImageNameLabel2" destination="UOD-Gs-QfO" id="p0E-XF-qVu"/>
                         <outlet property="flickrImageNameLabel3" destination="v6S-sf-jjC" id="aAF-az-uei"/>
@@ -106,7 +183,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="245" y="265"/>
+            <point key="canvasLocation" x="144" y="166"/>
         </scene>
     </scenes>
 </document>

@@ -76,7 +76,7 @@ class FlickrClient: NSObject {
             if let error = downloadError {
                 print("Error (no API response): \(error)")
                 self.processResponse = [
-                    "notification": "Error (no API response).\rTry again." as AnyObject,
+                    "notification": "Error (no API response)." as AnyObject,
                     "image": "",
                     "imageTitle": ""
                 ]
@@ -108,7 +108,7 @@ class FlickrClient: NSObject {
                     } else {
                         print("Error (API). Missing key 'pages' in \(photosDictionary)")
                         self.processResponse = [
-                            "notification": "Error (API).\rContact developer." as AnyObject,
+                            "notification": "Error (API)." as AnyObject,
                             "image": "",
                             "imageTitle": ""
                         ]
@@ -117,7 +117,7 @@ class FlickrClient: NSObject {
                 } else {
                     print("Error (API). Missing key 'photos' in \(parsedResult)")
                     self.processResponse = [
-                        "notification": "Error (API).\rContact developer." as AnyObject,
+                        "notification": "Error (API)." as AnyObject,
                         "image": "",
                         "imageTitle": ""
                     ]
@@ -146,7 +146,7 @@ class FlickrClient: NSObject {
             if let error = downloadError {
                 print("Error (no API response): \(error)")
                 self.processResponse = [
-                    "notification": "Error (API).\rContact developer." as AnyObject,
+                    "notification": "Error (API)." as AnyObject,
                     "image": "",
                     "imageTitle": ""
                 ]
@@ -259,7 +259,7 @@ class FlickrClient: NSObject {
                                      *  I expect since since dictionary has strict typing
                                      */
                                     self.processResponse = [
-                                        "notification": "Success.\rFound image(s)." as AnyObject,
+                                        "notification": "Success. Found image(s)." as AnyObject,
                                         "image": self.imageUrlString1!,
                                         "image2": self.imageUrlString2!,
                                         "image3": self.imageUrlString3!,
@@ -273,7 +273,7 @@ class FlickrClient: NSObject {
                                 } else {
                                     print("Error (no image in response) at an image URL")
                                     self.processResponse = [
-                                        "notification": "Error (no image in response).\rTry again." as AnyObject,
+                                        "notification": "Error (no image response)." as AnyObject,
                                         "image": "",
                                         "imageTitle": ""
                                     ]
@@ -282,7 +282,7 @@ class FlickrClient: NSObject {
                             } else {
                                 print("Error (no image in response) only an empty array")
                                 self.processResponse = [
-                                    "notification": "Error (no image in response).\rTry again." as AnyObject,
+                                    "notification": "Error (no image response)." as AnyObject,
                                     "image": "",
                                     "imageTitle": ""
                                 ]
@@ -291,7 +291,7 @@ class FlickrClient: NSObject {
                         } else {
                             print("Error (API). Missing key 'photo' in \(photosDictionary)")
                             self.processResponse = [
-                                "notification": "Error (API).\rContact developer." as AnyObject,
+                                "notification": "Error (API)." as AnyObject,
                                 "image": "",
                                 "imageTitle": ""
                             ]
@@ -300,7 +300,7 @@ class FlickrClient: NSObject {
                     } else {
                         print("Error (API). No photos found using key 'total'")
                         self.processResponse = [
-                            "notification": "Error (no photo in response).\rTry again." as AnyObject,
+                            "notification": "Error (no image response)." as AnyObject,
                             "image": "",
                             "imageTitle": ""
                         ]
@@ -309,7 +309,7 @@ class FlickrClient: NSObject {
                 } else {
                     print("Error (API). Missing key 'photos' in \(parsedResult)")
                     self.processResponse = [
-                        "notification": "Error (API).\rContact developer." as AnyObject,
+                        "notification": "Error (API)." as AnyObject,
                         "image": "",
                         "imageTitle": ""
                     ]

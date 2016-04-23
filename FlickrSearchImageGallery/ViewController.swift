@@ -19,6 +19,8 @@ let NO_JSON_CALLBACK = "1"
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
+
     @IBOutlet weak var flickrImageView1: UIImageView!
     @IBOutlet weak var flickrImageView2: UIImageView!
     @IBOutlet weak var flickrImageView3: UIImageView!
@@ -51,6 +53,12 @@ class ViewController: UIViewController {
         subscribeToKeyboardNotifications()
     }
 
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+
+        self.activitySpinner.hidden = true
+    }
+
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         backgroundView.removeGestureRecognizer(recognizer)
@@ -77,6 +85,9 @@ class ViewController: UIViewController {
 
             dismissAnyVisibleKeyboard() // Dismiss keyboard before search
 
+            self.activitySpinner.hidden = false
+            self.activitySpinner.startAnimating()
+
             FlickrAPI.sharedInstance.getImageFromFlickrBySearch(methodArguments)
 
             // Subscribe to a notification that fires upon Flickr Client response.
@@ -84,7 +95,7 @@ class ViewController: UIViewController {
         } else {
 
             dispatch_async(dispatch_get_main_queue(), {
-                self.notificationLabel.text = "Error (input field empty)"
+                self.notificationLabel.text = "Error (input field empty)."
             })
         }
     }
@@ -100,6 +111,9 @@ class ViewController: UIViewController {
         print("processFlickrResponse with: \(response)")
 
         dispatch_async(dispatch_get_main_queue(), {
+
+            self.activitySpinner.stopAnimating()
+            self.activitySpinner.hidden = true
 
             self.notificationLabel.text = response?["notification"] as? String
 

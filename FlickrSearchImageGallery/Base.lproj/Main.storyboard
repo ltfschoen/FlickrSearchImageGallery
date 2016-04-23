@@ -25,13 +25,15 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Qe2-sR-6Zg" userLabel="Stack View - S">
                                         <rect key="frame" x="5" y="5" width="550" height="33"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Keyword(s)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f8a-zL-G8U">
-                                                <rect key="frame" x="0.0" y="0.0" width="406" height="33"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Keyword(s)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f8a-zL-G8U">
+                                                <rect key="frame" x="0.0" y="0.0" width="411" height="33"/>
+                                                <color key="backgroundColor" red="0.61672810300000003" green="0.91250394570000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysj-yo-C7e">
-                                                <rect key="frame" x="406" y="0.0" width="144" height="33"/>
+                                                <rect key="frame" x="411" y="0.0" width="139" height="33"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <state key="normal" title="Search"/>
                                                 <connections>
@@ -141,14 +143,12 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LH5-vz-M7G">
                                                 <rect key="frame" x="0.0" y="0.0" width="53" height="105"/>
-                                                <state key="normal" title="Button"/>
                                                 <connections>
                                                     <segue destination="viq-Ho-VhQ" kind="presentation" identifier="ImageModalViewControllerID1" id="sUJ-cq-kbE"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s1f-U6-XeS">
                                                 <rect key="frame" x="53" y="0.0" width="52" height="105"/>
-                                                <state key="normal" title="Button"/>
                                                 <connections>
                                                     <segue destination="viq-Ho-VhQ" kind="presentation" identifier="ImageModalViewControllerID2" id="wfW-tp-vou"/>
                                                 </connections>
@@ -164,14 +164,12 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u7u-8V-Z9a">
                                                 <rect key="frame" x="0.0" y="0.0" width="53" height="105"/>
-                                                <state key="normal" title="Button"/>
                                                 <connections>
                                                     <segue destination="viq-Ho-VhQ" kind="presentation" identifier="ImageModalViewControllerID3" id="jV6-OD-leX"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L4A-o5-66e">
                                                 <rect key="frame" x="53" y="0.0" width="52" height="105"/>
-                                                <state key="normal" title="Button"/>
                                                 <connections>
                                                     <segue destination="viq-Ho-VhQ" kind="presentation" identifier="ImageModalViewControllerID4" id="8mV-Ny-zi7"/>
                                                 </connections>

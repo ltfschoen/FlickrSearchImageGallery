@@ -43,7 +43,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
 
         allTextFields = [keywordTextField]
-        recognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap")
+        recognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleSingleTap))
         recognizer?.numberOfTapsRequired = 1 // Single tap
         backgroundView.addGestureRecognizer(recognizer) // Add gesture recognizer
     }
@@ -91,7 +91,7 @@ class ViewController: UIViewController {
             FlickrAPI.sharedInstance.getImageFromFlickrBySearch(methodArguments)
 
             // Subscribe to a notification that fires upon Flickr Client response.
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "processFlickrResponse:", name: FlickrClientProcessResponseNotification, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.processFlickrResponse(_:)), name: FlickrClientProcessResponseNotification, object: nil)
         } else {
 
             dispatch_async(dispatch_get_main_queue(), {
@@ -233,9 +233,9 @@ class ViewController: UIViewController {
      *                     show/hide keyboard by calling appropriate selector method
      */
     func subscribeToKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillShow), name: UIKeyboardWillShowNotification, object: nil)
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillHide), name: UIKeyboardWillHideNotification, object: nil)
     }
 
     func unsubscribeFromKeyboardNotifications() {

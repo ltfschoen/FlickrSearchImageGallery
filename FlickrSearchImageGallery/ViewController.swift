@@ -32,6 +32,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var flickrImageNameLabel4: UILabel!
 
     @IBOutlet weak var keywordTextField: UITextField!
+
+    @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
+    
     @IBOutlet weak var notificationLabel: UILabel!
     @IBOutlet var backgroundView: UIView!
 
@@ -41,6 +45,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+
+        self.cancelButton.hidden = true
+        self.cancelButton.userInteractionEnabled = false
 
         allTextFields = [keywordTextField]
         recognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleSingleTap))
@@ -70,9 +77,39 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func searchByKeyword(sender: AnyObject) {
 
-         if keywordTextField.text != "" {
+    @IBAction func cancelKeywordSearch(sender: AnyObject) {
+        
+        FlickrAPI.sharedInstance.cancelKeywordSearch()
+        
+        dispatch_async(dispatch_get_main_queue(), {
+
+            // TODO: Refactor into Helper method to achieve DRYer codebase
+
+            self.cancelButton.hidden = true
+            self.cancelButton.userInteractionEnabled = false
+            self.searchButton.hidden = false
+            self.searchButton.userInteractionEnabled = true
+
+            self.activitySpinner.stopAnimating()
+            self.activitySpinner.hidden = true
+            
+            self.notificationLabel.text = "Cancelled."
+        })
+    }
+    
+    @IBAction func searchByKeyword(sender: AnyObject) {
+        
+        self.notificationLabel.text = ""
+
+        if keywordTextField.text != "" {
+
+            FlickrAPI.sharedInstance.enableFlickrRequests()
+
+            self.cancelButton.hidden = false
+            self.cancelButton.userInteractionEnabled = true
+            self.searchButton.hidden = true
+            self.searchButton.userInteractionEnabled = false
 
             let methodArguments = [
                 "method": METHOD_NAME,
@@ -120,6 +157,12 @@ class ViewController: UIViewController {
             // Only process responses where image exists
             if response!["image"] as! String != "" {
 
+                /// Update Buttons
+                self.cancelButton.hidden = true
+                self.cancelButton.userInteractionEnabled = false
+                self.searchButton.hidden = false
+                self.searchButton.userInteractionEnabled = true
+                
                 /// Update Images in UI
                 
                 if let responseImage1 = response!["image"] {

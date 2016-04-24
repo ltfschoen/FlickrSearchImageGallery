@@ -26,20 +26,47 @@
                                         <rect key="frame" x="5" y="5" width="550" height="33"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Keyword(s)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f8a-zL-G8U">
-                                                <rect key="frame" x="0.0" y="0.0" width="411" height="33"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="324" height="33"/>
                                                 <color key="backgroundColor" red="0.61672810300000003" green="0.91250394570000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <accessibility key="accessibilityConfiguration" label="Keyword Entered"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="17"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysj-yo-C7e">
-                                                <rect key="frame" x="411" y="0.0" width="139" height="33"/>
+                                                <rect key="frame" x="324" y="0.0" width="114" height="33"/>
+                                                <color key="backgroundColor" red="0.32600767845849477" green="0.83875307427585133" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <accessibility key="accessibilityConfiguration" label="Keyword Search"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                 <state key="normal" title="Search"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="17"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="searchByKeyword:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3a7-Ga-fxx"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mPo-Zt-5TV">
+                                                <rect key="frame" x="438" y="0.0" width="112" height="33"/>
+                                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                <state key="normal" title="Cancel">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="17"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="cancelKeywordSearch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MVb-fL-rcF"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -47,7 +74,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gVY-nR-Kv3">
                                         <rect key="frame" x="8" y="43" width="544" height="0.0"/>
                                         <accessibility key="accessibilityConfiguration" label="Notification Label"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -251,6 +278,7 @@
                     <connections>
                         <outlet property="activitySpinner" destination="Tl4-JU-PEJ" id="ctf-RJ-YNa"/>
                         <outlet property="backgroundView" destination="yhx-8J-O7G" id="ZP0-at-sfw"/>
+                        <outlet property="cancelButton" destination="mPo-Zt-5TV" id="CeL-dB-vZg"/>
                         <outlet property="flickrImageNameLabel1" destination="lNZ-Gv-qHq" id="igu-Hs-Kvz"/>
                         <outlet property="flickrImageNameLabel2" destination="UOD-Gs-QfO" id="p0E-XF-qVu"/>
                         <outlet property="flickrImageNameLabel3" destination="v6S-sf-jjC" id="aAF-az-uei"/>
@@ -261,6 +289,7 @@
                         <outlet property="flickrImageView4" destination="ZvS-e7-lkV" id="CEz-rV-ama"/>
                         <outlet property="keywordTextField" destination="f8a-zL-G8U" id="jHE-iM-fdP"/>
                         <outlet property="notificationLabel" destination="gVY-nR-Kv3" id="1BD-S1-Hvf"/>
+                        <outlet property="searchButton" destination="ysj-yo-C7e" id="A5n-f5-jYE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

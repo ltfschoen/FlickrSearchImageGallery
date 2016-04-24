@@ -33,6 +33,27 @@ class FlickrAPI: NSObject {
     func getImageFromFlickrBySearch(methodArguments: [String : AnyObject]) {
         flickrClient.getImageFromFlickrBySearch(methodArguments)
     }
+
+    func enableFlickrRequests() {
+        flickrClient.cancelFlickrRequests = false
+    }
+
+    func cancelKeywordSearch() {
+        if flickrClient.flickrTask != nil {
+            flickrClient.flickrTask!.cancel()
+        }
+        if flickrClient.flickrTaskWithPage != nil {
+            flickrClient.flickrTaskWithPage!.cancel()
+        }
+        if flickrClient.flickrRequestTimer != nil {
+            flickrClient.flickrRequestTimer!.invalidate()
+        }
+        if flickrClient.flickrRequestWithPageTimer != nil {
+            flickrClient.flickrRequestWithPageTimer!.invalidate()
+        }
+        flickrClient.randomPageRetryHistory = []
+        flickrClient.cancelFlickrRequests = true
+    }
     
     // MARK: - Thread Safe Singleton Pattern
     

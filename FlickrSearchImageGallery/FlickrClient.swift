@@ -17,8 +17,20 @@ public let FlickrClientProcessResponseNotification = "FlickrClientProcessRespons
 class FlickrClient: NSObject {
     
     // MARK: Properties
+
+    var cancelFlickrRequests: Bool = false
+
+    var flickrTask: NSURLSessionDataTask?
+    var flickrTaskWithPage: NSURLSessionDataTask?
+
     var processResponse: [String: AnyObject]?
 
+    var flickrRequestTimer: NSTimer? // Timer for method that requests random page from Flickr API
+    var flickrRequestWithPageTimer: NSTimer? // Timer for method requesting image from random page
+    var pageLimit: Int? // Store page limit of current Flickr request for new page no. on retry
+    var randomPage: Int? // Store random page since on retry we want to avoid retrying the same
+    var randomPageRetryHistory: [Int] = []
+    
     var imageUrlString1: String?
     var imageUrlString2: String?
     var imageUrlString3: String?
@@ -59,28 +71,135 @@ class FlickrClient: NSObject {
     }
     
     // MARK: - API Search Methods
+
+    // TODO: Refactor into Helper methods to achieve DRYer codebase
+
+    /**
+     *  Configure NSTimer to call Flickr request method each specified time interval
+     *  until timer terminated
+     */
+    func processRetryRequest(methodArguments: [String : AnyObject]) {
+        print("----- processRetryRequest -----")
+
+        // Automatically add timer to run loop so it starts firing
+        self.flickrRequestTimer = NSTimer(timeInterval: 3, target: self, selector: Selector("readyToRetryFlickrBySearch:"), userInfo: ["key1" : methodArguments], repeats: false)
+        NSRunLoop.mainRunLoop().addTimer(self.flickrRequestTimer!, forMode:NSRunLoopCommonModes)
+    }
+
+    func readyToRetryFlickrBySearch(timer: NSTimer?) {
+        print("----- readyToRetryFlickrBySearch -----  \(timer!.userInfo)")
+        getImageFromFlickrBySearch(timer?.userInfo?["key1"] as! [String : AnyObject])
+    }
+
+    /**
+     *  Delegate method of NSURLSession receives callback when activity completes.
+     *  Important: Ensure that correct request task variable name is used.
+     *
+     */
+    func URLSession(session: NSURLSession, flickrTask: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
+        
+        print("----- URLSession -----")
+
+        /*
+         *  Invalidate timer stored as property of the request object and calls a method
+         *  on the object) when finished with it to break the strong reference cycle.
+         */
+        if self.flickrRequestTimer != nil {
+            self.flickrRequestTimer!.invalidate()
+        }
+    }
+    
+    /**
+     *  Configure NSTimer to call Flickr request (with page) method each specified time interval
+     *  until timer terminated
+     */
+    func processRetryRequestWithPage(methodArguments: [String : AnyObject], pageNumber: Int) {
+        
+        print("----- processRetryRequestWithPage -----")
+        
+        /// Generate a new random page number (unique not previously used) for the retry request
+
+        var foundUnique = false
+        var newRandomPageGenerated: Int?
+
+        // Only keep trying until we exhaust the page limit (source of random number) itself
+        while foundUnique == false {
+
+            newRandomPageGenerated = Int(arc4random_uniform(UInt32(self.pageLimit!))) + 1
+
+            func checkForDuplicateInRandomPageHistory(rpg: Int) -> Bool {
+                let count = self.randomPageRetryHistory.count
+                for var index = 0; index < count; index += 1 {
+                    if self.randomPageRetryHistory[index] == rpg {
+                        return true
+                    }
+                }
+                return false
+            }
+            if checkForDuplicateInRandomPageHistory(newRandomPageGenerated!) == false {
+                foundUnique = true
+            }
+        }
+        self.randomPage = newRandomPageGenerated!
+        
+        // Cast randomPage as an Int for use in the NSTimer dictionary
+        let randomPageAsIntForDictionary = self.randomPage! as Int
+
+        // Automatically add timer to run loop so it starts firing
+        self.flickrRequestWithPageTimer = NSTimer(timeInterval: 5, target: self, selector: #selector(readyToRetryFlickrBySearchWithPage), userInfo: ["key1" : methodArguments, "key2" : randomPageAsIntForDictionary], repeats: false)
+        NSRunLoop.mainRunLoop().addTimer(self.flickrRequestWithPageTimer!, forMode:NSRunLoopCommonModes)
+    }
+
+    func readyToRetryFlickrBySearchWithPage(timer: NSTimer?) {
+        print("----- readyToRetryFlickrBySearchWithPage ----- \(timer!.userInfo)")
+        getImageFromFlickrBySearchWithPage(timer?.userInfo?["key1"] as! [String : AnyObject], pageNumber: timer?.userInfo?["key2"] as! Int)
+    }
+    
+    // TODO: Remove URLSession methods. No benefit as not hooking into self.flickrTask__
+    
+    /**
+     *  Delegate method of NSURLSession receives callback when activity completes.
+     *  Important: Ensure that correct request task variable name is used.
+     *
+     */
+    func URLSession(session: NSURLSession, flickrTaskWithPage: NSURLSessionDownloadTask, didFinishDownloadingToURL location: NSURL) {
+        
+        print("----- URLSession (with Page) -----")
+
+        /*
+         *  Invalidate timer stored as property of the request object and calls a method
+         *  on the object) when finished with it to break the strong reference cycle.
+         */
+        if self.flickrRequestWithPageTimer != nil {
+            self.flickrRequestWithPageTimer!.invalidate()
+        }
+    }
     
     /**
     *  Request random page from Flickr API. Call separate method to
     *  get image from random page
     */
     func getImageFromFlickrBySearch(methodArguments: [String : AnyObject]) {
-        print("getImageFromFlickrBySearch with: \(methodArguments)")
+        print("----- getImageFromFlickrBySearch with: \(methodArguments)")
 
+        // TODO: Consider benefits of using a Background Session
         let session = NSURLSession.sharedSession()
         let urlString = ENDPOINT_URL + escapedParameters(methodArguments)
         let url = NSURL(string: urlString)!
         let request = NSURLRequest(URL: url)
         
-        let task = session.dataTaskWithRequest(request) {data, response, downloadError in
+        self.flickrTask = session.dataTaskWithRequest(request) {data, response, downloadError in
             if let error = downloadError {
-                print("Error (no API response): \(error)")
-                self.processResponse = [
-                    "notification": "Error (no API response)." as AnyObject,
-                    "image": "",
-                    "imageTitle": ""
-                ]
-                NSNotificationCenter.defaultCenter().postNotificationName(FlickrClientProcessResponseNotification, object: self.processResponse)
+                print("Error (no API response): \(error). Auto-retrying.")
+                if self.cancelFlickrRequests == false {
+                    self.processResponse = [
+                        "notification": "Error (no API response). Auto-retrying." as AnyObject,
+                        "image": "",
+                        "imageTitle": ""
+                    ]
+                    NSNotificationCenter.defaultCenter().postNotificationName(FlickrClientProcessResponseNotification, object: self.processResponse)
+                    self.processRetryRequest(methodArguments)
+                }
             } else {
                 
                 var parsingError: NSError? = nil
@@ -99,14 +218,32 @@ class FlickrClient: NSObject {
                          *  random page, which may have around 100 images.
                          */
                         
-                        let pageLimit = min(totalPages, 40)
-                        print("page limit is: \(pageLimit)")
-                        let randomPage = Int(arc4random_uniform(UInt32(pageLimit))) + 1
-                        print("randomPage is: \(randomPage)")
-                        self.getImageFromFlickrBySearchWithPage(methodArguments, pageNumber: randomPage)
+                        self.pageLimit = min(totalPages, 40)
+                        print("page limit is: \(self.pageLimit)")
+                        self.randomPage = Int(arc4random_uniform(UInt32(self.pageLimit!))) + 1
+
+                        // Add this random page to search history to prevent retrying same page
+                        self.randomPageRetryHistory.append(self.randomPage!)
+                        print("randomPage is: \(self.randomPage)")
+                        self.getImageFromFlickrBySearchWithPage(methodArguments, pageNumber: self.randomPage!)
+                        if self.flickrRequestTimer != nil {
+                            self.flickrRequestTimer!.invalidate()
+                        }
                         
                     } else {
                         print("Error (API). Missing key 'pages' in \(photosDictionary)")
+                        if self.cancelFlickrRequests == false {
+                            self.processResponse = [
+                                "notification": "Error (API)." as AnyObject,
+                                "image": "",
+                                "imageTitle": ""
+                            ]
+                            NSNotificationCenter.defaultCenter().postNotificationName(FlickrClientProcessResponseNotification, object: self.processResponse)
+                        }
+                    }
+                } else {
+                    print("Error (API). Missing key 'photos' in \(parsedResult)")
+                    if self.cancelFlickrRequests == false {
                         self.processResponse = [
                             "notification": "Error (API)." as AnyObject,
                             "image": "",
@@ -114,18 +251,10 @@ class FlickrClient: NSObject {
                         ]
                         NSNotificationCenter.defaultCenter().postNotificationName(FlickrClientProcessResponseNotification, object: self.processResponse)
                     }
-                } else {
-                    print("Error (API). Missing key 'photos' in \(parsedResult)")
-                    self.processResponse = [
-                        "notification": "Error (API)." as AnyObject,
-                        "image": "",
-                        "imageTitle": ""
-                    ]
-                    NSNotificationCenter.defaultCenter().postNotificationName(FlickrClientProcessResponseNotification, object: self.processResponse)
                 }
             }
         }
-        task.resume()
+        self.flickrTask!.resume()
     }
     
     /**
@@ -142,15 +271,18 @@ class FlickrClient: NSObject {
         let url = NSURL(string: urlString)!
         let request = NSURLRequest(URL: url)
         
-        let task = session.dataTaskWithRequest(request) {data, response, downloadError in
+        self.flickrTaskWithPage = session.dataTaskWithRequest(request) {data, response, downloadError in
             if let error = downloadError {
-                print("Error (no API response): \(error)")
-                self.processResponse = [
-                    "notification": "Error (API)." as AnyObject,
-                    "image": "",
-                    "imageTitle": ""
-                ]
-                NSNotificationCenter.defaultCenter().postNotificationName(FlickrClientProcessResponseNotification, object: self.processResponse)
+                print("Error (no API response): \(error). Auto-retrying.")
+                if self.cancelFlickrRequests == false {
+                    self.processResponse = [
+                        "notification": "Error (no API response). Auto-retrying." as AnyObject,
+                        "image": "",
+                        "imageTitle": ""
+                    ]
+                    NSNotificationCenter.defaultCenter().postNotificationName(FlickrClientProcessResponseNotification, object: self.processResponse)
+                    self.processRetryRequestWithPage(methodArguments, pageNumber: pageNumber)
+                }
             } else {
                 var parsingError: NSError? = nil
                 let parsedResult = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
@@ -269,55 +401,90 @@ class FlickrClient: NSObject {
                                         "imageTitle3": self.photoTitle3!,
                                         "imageTitle4": self.photoTitle4!
                                     ]
-                                    NSNotificationCenter.defaultCenter().postNotificationName(FlickrClientProcessResponseNotification, object: self.processResponse)
+                                    
+                                    /**
+                                     *  Upon success, invalidate the timer, reset page history
+                                     *  and cancel API requests
+                                     */
+                                    if self.flickrRequestWithPageTimer != nil {
+                                        if self.flickrTask != nil {
+                                            self.flickrTask!.cancel()
+                                        }
+                                        if self.flickrTaskWithPage != nil {
+                                            self.flickrTaskWithPage!.cancel()
+                                        }
+                                        if self.flickrRequestTimer != nil {
+                                            self.flickrRequestTimer!.invalidate()
+                                        }
+                                        if self.flickrRequestWithPageTimer != nil {
+                                            self.flickrRequestWithPageTimer!.invalidate()
+                                        }
+                                        self.randomPageRetryHistory = []
+                                    }
+                                    if self.cancelFlickrRequests == false {
+                                        NSNotificationCenter.defaultCenter().postNotificationName(FlickrClientProcessResponseNotification, object: self.processResponse)
+                                    }
                                 } else {
-                                    print("Error (no image in response) at an image URL")
+                                    print("Error (no image response) at image URL. Auto-retrying.")
+                                    if self.cancelFlickrRequests == false {
+                                        self.processResponse = [
+                                            "notification": "Error (no image response). Auto-retrying." as AnyObject,
+                                            "image": "",
+                                            "imageTitle": ""
+                                        ]
+                                        NSNotificationCenter.defaultCenter().postNotificationName(FlickrClientProcessResponseNotification, object: self.processResponse)
+                                        self.processRetryRequestWithPage(methodArguments, pageNumber: pageNumber)
+                                    }
+                                }
+                            } else {
+                                print("Error (no image response) only an empty array")
+                                if self.cancelFlickrRequests == false {
                                     self.processResponse = [
-                                        "notification": "Error (no image response)." as AnyObject,
+                                        "notification": "Error (no image response). Auto-retrying." as AnyObject,
                                         "image": "",
                                         "imageTitle": ""
                                     ]
                                     NSNotificationCenter.defaultCenter().postNotificationName(FlickrClientProcessResponseNotification, object: self.processResponse)
+                                    self.processRetryRequestWithPage(methodArguments, pageNumber: pageNumber)
                                 }
-                            } else {
-                                print("Error (no image in response) only an empty array")
+                            }
+                        } else {
+                            print("Error (API). Missing key 'photo' in \(photosDictionary)")
+                            if self.cancelFlickrRequests == false {
                                 self.processResponse = [
-                                    "notification": "Error (no image response)." as AnyObject,
+                                    "notification": "Error (API)." as AnyObject,
                                     "image": "",
                                     "imageTitle": ""
                                 ]
                                 NSNotificationCenter.defaultCenter().postNotificationName(FlickrClientProcessResponseNotification, object: self.processResponse)
                             }
-                        } else {
-                            print("Error (API). Missing key 'photo' in \(photosDictionary)")
+                        }
+                    } else {
+                        print("Error (API). No photos found using key 'total'. Auto-retrying.")
+                        if self.cancelFlickrRequests == false {
                             self.processResponse = [
-                                "notification": "Error (API)." as AnyObject,
+                                "notification": "Error (no image response). Auto-retrying." as AnyObject,
                                 "image": "",
                                 "imageTitle": ""
                             ]
                             NSNotificationCenter.defaultCenter().postNotificationName(FlickrClientProcessResponseNotification, object: self.processResponse)
+                            self.processRetryRequestWithPage(methodArguments, pageNumber: pageNumber)
                         }
-                    } else {
-                        print("Error (API). No photos found using key 'total'")
+                    }
+                } else {
+                    print("Error (API). Missing key 'photos' in \(parsedResult)")
+                    if self.cancelFlickrRequests == false {
                         self.processResponse = [
-                            "notification": "Error (no image response)." as AnyObject,
+                            "notification": "Error (API)." as AnyObject,
                             "image": "",
                             "imageTitle": ""
                         ]
                         NSNotificationCenter.defaultCenter().postNotificationName(FlickrClientProcessResponseNotification, object: self.processResponse)
                     }
-                } else {
-                    print("Error (API). Missing key 'photos' in \(parsedResult)")
-                    self.processResponse = [
-                        "notification": "Error (API)." as AnyObject,
-                        "image": "",
-                        "imageTitle": ""
-                    ]
-                    NSNotificationCenter.defaultCenter().postNotificationName(FlickrClientProcessResponseNotification, object: self.processResponse)
                 }
             }
         }
         
-        task.resume()
+        self.flickrTaskWithPage!.resume()
     }
 }

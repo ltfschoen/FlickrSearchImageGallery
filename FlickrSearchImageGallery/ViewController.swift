@@ -272,19 +272,19 @@ class ViewController: UIViewController {
 
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         
-        // Only transition if the image has been loaded
-        if identifier == "ImageModalViewControllerID" {
-            let shouldTransition: Bool
-            if sender != nil {
-                shouldTransition = true
-            } else {
-                shouldTransition = false
-            }
-            return shouldTransition
+        // Only transition to larger image view if the respective image has been loaded from Flickr
+        switch identifier {
+        case "ImageModalViewControllerID1":
+            return self.flickrImageView1.image != nil ? true : false
+        case "ImageModalViewControllerID2":
+            return self.flickrImageView2.image != nil ? true : false
+        case "ImageModalViewControllerID3":
+            return self.flickrImageView3.image != nil ? true : false
+        case "ImageModalViewControllerID4":
+            return self.flickrImageView4.image != nil ? true : false
+        default:
+            return false
         }
-        
-        // Other segues are performed by default
-        return true
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -298,6 +298,7 @@ class ViewController: UIViewController {
             if let destinationVC = segue.destinationViewController as? ImageModalViewController {
                 if self.flickrImageView1.image != nil {
                     destinationVC.copyOfFlickrImage1 = self.flickrImageView1.image
+                    destinationVC.copyOfFlickrImageNameLabel1 = self.flickrImageNameLabel1.text
                     destinationVC.segueSenderID = segue.identifier!
                 }
             }
@@ -305,6 +306,7 @@ class ViewController: UIViewController {
             if let destinationVC = segue.destinationViewController as? ImageModalViewController {
                 if self.flickrImageView2.image != nil {
                     destinationVC.copyOfFlickrImage2 = self.flickrImageView2.image
+                    destinationVC.copyOfFlickrImageNameLabel2 = self.flickrImageNameLabel2.text
                     destinationVC.segueSenderID = segue.identifier!
                 }
             }
@@ -312,6 +314,7 @@ class ViewController: UIViewController {
             if let destinationVC = segue.destinationViewController as? ImageModalViewController {
                 if self.flickrImageView3.image != nil {
                     destinationVC.copyOfFlickrImage3 = self.flickrImageView3.image
+                    destinationVC.copyOfFlickrImageNameLabel3 = self.flickrImageNameLabel3.text
                     destinationVC.segueSenderID = segue.identifier!
                 }
             }
@@ -319,6 +322,7 @@ class ViewController: UIViewController {
             if let destinationVC = segue.destinationViewController as? ImageModalViewController {
                 if self.flickrImageView4.image != nil {
                     destinationVC.copyOfFlickrImage4 = self.flickrImageView4.image
+                    destinationVC.copyOfFlickrImageNameLabel4 = self.flickrImageNameLabel4.text
                     destinationVC.segueSenderID = segue.identifier!
                 }
             }

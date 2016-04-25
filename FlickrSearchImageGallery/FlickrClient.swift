@@ -33,6 +33,11 @@ class FlickrClient: NSObject {
     var randomPage: Int? // Store random page since on retry we want to avoid retrying the same
     var randomPageRetryHistory: [Int] = []
     
+    var imageThumbnailUrlString1: String = ""
+    var imageThumbnailUrlString2: String = ""
+    var imageThumbnailUrlString3: String = ""
+    var imageThumbnailUrlString4: String = ""
+
     var imageUrlString1: String?
     var imageUrlString2: String?
     var imageUrlString3: String?
@@ -345,6 +350,18 @@ class FlickrClient: NSObject {
                                 }
 
                                 /**
+                                 *   Get the thumbnail url for each of the 4 random photos
+                                 */
+
+                                self.imageThumbnailUrlString1 = "http://farm\(photoDictionary1["farm"]!).staticflickr.com/\(photoDictionary1["server"]!)/\(photoDictionary1["id"]!)_\(photoDictionary1["secret"]!)_t.jpg"
+
+                                self.imageThumbnailUrlString2 = "http://farm\(photoDictionary2["farm"]!).staticflickr.com/\(photoDictionary2["server"]!)/\(photoDictionary2["id"]!)_\(photoDictionary2["secret"]!)_t.jpg"
+    
+                                self.imageThumbnailUrlString3 = "http://farm\(photoDictionary3["farm"]!).staticflickr.com/\(photoDictionary3["server"]!)/\(photoDictionary3["id"]!)_\(photoDictionary3["secret"]!)_t.jpg"
+
+                                self.imageThumbnailUrlString4 = "http://farm\(photoDictionary4["farm"]!).staticflickr.com/\(photoDictionary4["server"]!)/\(photoDictionary4["id"]!)_\(photoDictionary4["secret"]!)_t.jpg"
+
+                                /**
                                  *   Get the photo dictionary URL property for each 
                                  *   of the 4 random photos if they exist
                                  */
@@ -378,11 +395,17 @@ class FlickrClient: NSObject {
                                 }
 
                                 /**
-                                *   Check that at least 1 out of the 4 random photo url's
+                                *   Check that at least all of the 4 random photo url's and thumbnails
                                 *   exist before advising that images were found
                                 */
                                 
-                                if (self.imageUrlString1 != "" && self.imageUrlString2 != "" && self.imageUrlString3 != "" && self.imageUrlString4 != "") {
+                                var arrThumbs = Set<String>()
+                                arrThumbs.insert(self.imageThumbnailUrlString1)
+                                arrThumbs.insert(self.imageThumbnailUrlString2)
+                                arrThumbs.insert(self.imageThumbnailUrlString3)
+                                arrThumbs.insert(self.imageThumbnailUrlString4)
+
+                                if !arrThumbs.contains("") {
 
                                     /**
                                      *  Note: Attempted to send images and image titles
@@ -393,6 +416,10 @@ class FlickrClient: NSObject {
                                      */
                                     self.processResponse = [
                                         "notification": "Success. Found image(s) after (\(self.retryCount)) retries." as AnyObject,
+                                        "imageThumb": self.imageThumbnailUrlString1,
+                                        "imageThumb2": self.imageThumbnailUrlString2,
+                                        "imageThumb3": self.imageThumbnailUrlString3,
+                                        "imageThumb4": self.imageThumbnailUrlString4,
                                         "image": self.imageUrlString1!,
                                         "image2": self.imageUrlString2!,
                                         "image3": self.imageUrlString3!,

@@ -36,6 +36,7 @@ class FlickrAPI: NSObject {
 
     func enableFlickrRequests() {
         flickrClient.cancelFlickrRequests = false
+        flickrClient.retryCount = 0
     }
 
     func cancelKeywordSearch() {
@@ -53,6 +54,7 @@ class FlickrAPI: NSObject {
         }
         flickrClient.randomPageRetryHistory = []
         flickrClient.cancelFlickrRequests = true
+        flickrClient.retryCount = 0
     }
     
     // MARK: - Thread Safe Singleton Pattern

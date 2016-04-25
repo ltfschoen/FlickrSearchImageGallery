@@ -18,6 +18,8 @@ class FlickrClient: NSObject {
     
     // MARK: Properties
 
+    var retryCount: Int = 0
+
     var cancelFlickrRequests: Bool = false
 
     var flickrTask: NSURLSessionDataTask?
@@ -82,7 +84,7 @@ class FlickrClient: NSObject {
         print("----- processRetryRequest -----")
 
         // Automatically add timer to run loop so it starts firing
-        self.flickrRequestTimer = NSTimer(timeInterval: 3, target: self, selector: Selector("readyToRetryFlickrBySearch:"), userInfo: ["key1" : methodArguments], repeats: false)
+        self.flickrRequestTimer = NSTimer(timeInterval: 3, target: self, selector: #selector(FlickrClient.readyToRetryFlickrBySearch(_:)), userInfo: ["key1" : methodArguments], repeats: false)
         NSRunLoop.mainRunLoop().addTimer(self.flickrRequestTimer!, forMode:NSRunLoopCommonModes)
     }
 
@@ -129,7 +131,7 @@ class FlickrClient: NSObject {
 
             func checkForDuplicateInRandomPageHistory(rpg: Int) -> Bool {
                 let count = self.randomPageRetryHistory.count
-                for var index = 0; index < count; index += 1 {
+                for index in 0 ..< count {
                     if self.randomPageRetryHistory[index] == rpg {
                         return true
                     }
@@ -190,10 +192,11 @@ class FlickrClient: NSObject {
         
         self.flickrTask = session.dataTaskWithRequest(request) {data, response, downloadError in
             if let error = downloadError {
-                print("Error (no API response): \(error). Auto-retrying.")
+                self.retryCount += 1
+                print("Error (no API response): \(error). Auto-retry(\(self.retryCount)).")
                 if self.cancelFlickrRequests == false {
                     self.processResponse = [
-                        "notification": "Error (no API response). Auto-retrying." as AnyObject,
+                        "notification": "Error (no API response). Auto-retrying(\(self.retryCount))." as AnyObject,
                         "image": "",
                         "imageTitle": ""
                     ]
@@ -201,8 +204,6 @@ class FlickrClient: NSObject {
                     self.processRetryRequest(methodArguments)
                 }
             } else {
-                
-                var parsingError: NSError? = nil
                 let parsedResult = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
                 
                 if let photosDictionary = parsedResult.valueForKey("photos") as? [String:AnyObject] {
@@ -273,10 +274,11 @@ class FlickrClient: NSObject {
         
         self.flickrTaskWithPage = session.dataTaskWithRequest(request) {data, response, downloadError in
             if let error = downloadError {
-                print("Error (no API response): \(error). Auto-retrying.")
+                self.retryCount += 1
+                print("Error (no API response): \(error). Auto-retry(\(self.retryCount)).")
                 if self.cancelFlickrRequests == false {
                     self.processResponse = [
-                        "notification": "Error (no API response). Auto-retrying." as AnyObject,
+                        "notification": "Error (no API response). Auto-retry(\(self.retryCount))." as AnyObject,
                         "image": "",
                         "imageTitle": ""
                     ]
@@ -284,7 +286,6 @@ class FlickrClient: NSObject {
                     self.processRetryRequestWithPage(methodArguments, pageNumber: pageNumber)
                 }
             } else {
-                var parsingError: NSError? = nil
                 let parsedResult = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
                 
                 if let photosDictionary = parsedResult.valueForKey("photos") as? [String:AnyObject] {
@@ -307,7 +308,7 @@ class FlickrClient: NSObject {
                                  */
                                 var randomPhotosIndexes: [Int] = []
                                 var randomPhotoIndex: Int = 0
-                                for i in 1...4 {
+                                for _ in 1...4 {
                                     randomPhotoIndex = Int(arc4random_uniform(UInt32(photosArray.count)))
                                     randomPhotosIndexes.append(randomPhotoIndex)
                                 }
@@ -391,7 +392,7 @@ class FlickrClient: NSObject {
                                      *  I expect since since dictionary has strict typing
                                      */
                                     self.processResponse = [
-                                        "notification": "Success. Found image(s)." as AnyObject,
+                                        "notification": "Success. Found image(s) after (\(self.retryCount)) retries." as AnyObject,
                                         "image": self.imageUrlString1!,
                                         "image2": self.imageUrlString2!,
                                         "image3": self.imageUrlString3!,
@@ -425,10 +426,11 @@ class FlickrClient: NSObject {
                                         NSNotificationCenter.defaultCenter().postNotificationName(FlickrClientProcessResponseNotification, object: self.processResponse)
                                     }
                                 } else {
-                                    print("Error (no image response) at image URL. Auto-retrying.")
+                                    self.retryCount += 1
+                                    print("Error (no image response) at image URL. Auto-retry(\(self.retryCount)).")
                                     if self.cancelFlickrRequests == false {
                                         self.processResponse = [
-                                            "notification": "Error (no image response). Auto-retrying." as AnyObject,
+                                            "notification": "Error (no image response). Auto-retry(\(self.retryCount))." as AnyObject,
                                             "image": "",
                                             "imageTitle": ""
                                         ]
@@ -437,10 +439,11 @@ class FlickrClient: NSObject {
                                     }
                                 }
                             } else {
+                                self.retryCount += 1
                                 print("Error (no image response) only an empty array")
                                 if self.cancelFlickrRequests == false {
                                     self.processResponse = [
-                                        "notification": "Error (no image response). Auto-retrying." as AnyObject,
+                                        "notification": "Error (no image response). Auto-retry(\(self.retryCount))." as AnyObject,
                                         "image": "",
                                         "imageTitle": ""
                                     ]
@@ -460,7 +463,8 @@ class FlickrClient: NSObject {
                             }
                         }
                     } else {
-                        print("Error (API). No photos found using key 'total'. Auto-retrying.")
+                        self.retryCount += 1
+                        print("Error (API). No photos found using key 'total'. Auto-retry(\(self.retryCount)).")
                         if self.cancelFlickrRequests == false {
                             self.processResponse = [
                                 "notification": "Error (no image response). Auto-retrying." as AnyObject,

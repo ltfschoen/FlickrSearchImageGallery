@@ -74,8 +74,7 @@ class FlickrSearchImageGalleryUITests: XCTestCase {
         let task = session.dataTaskWithURL(URL!) { data, response, error in
             XCTAssertNotNil(data, "Data should not be nil")
             XCTAssertNil(error, "Error should be nil")
-            if let HTTPResponse = response as? NSHTTPURLResponse,
-                responseURL = HTTPResponse.URL {
+            if let HTTPResponse = response as? NSHTTPURLResponse {
                 XCTAssertEqual(HTTPResponse.statusCode, 200, "HTTP response status code should be 200")
                 dispatch_async(dispatch_get_main_queue(), {
                     labelNotificationText = expectedNotification

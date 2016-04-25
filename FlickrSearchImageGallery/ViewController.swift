@@ -46,8 +46,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        self.cancelButton.hidden = true
-        self.cancelButton.userInteractionEnabled = false
+        self.toggleOnCancelButton(false)
 
         allTextFields = [keywordTextField]
         recognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleSingleTap))
@@ -77,7 +76,6 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
     @IBAction func cancelKeywordSearch(sender: AnyObject) {
         
         FlickrAPI.sharedInstance.cancelKeywordSearch()
@@ -86,10 +84,7 @@ class ViewController: UIViewController {
 
             // TODO: Refactor into Helper method to achieve DRYer codebase
 
-            self.cancelButton.hidden = true
-            self.cancelButton.userInteractionEnabled = false
-            self.searchButton.hidden = false
-            self.searchButton.userInteractionEnabled = true
+            self.toggleOnCancelButton(false)
 
             self.activitySpinner.stopAnimating()
             self.activitySpinner.hidden = true
@@ -106,10 +101,7 @@ class ViewController: UIViewController {
 
             FlickrAPI.sharedInstance.enableFlickrRequests()
 
-            self.cancelButton.hidden = false
-            self.cancelButton.userInteractionEnabled = true
-            self.searchButton.hidden = true
-            self.searchButton.userInteractionEnabled = false
+            self.toggleOnCancelButton(true)
 
             let methodArguments = [
                 "method": METHOD_NAME,
@@ -137,6 +129,21 @@ class ViewController: UIViewController {
         }
     }
 
+    // MARK: - Button Helper Methods
+    func toggleOnCancelButton(state: Bool) {
+        if state == false {
+            self.cancelButton.hidden = true
+            self.cancelButton.userInteractionEnabled = false
+            self.searchButton.hidden = false
+            self.searchButton.userInteractionEnabled = true
+        } else if state == true {
+            self.cancelButton.hidden = false
+            self.cancelButton.userInteractionEnabled = true
+            self.searchButton.hidden = true
+            self.searchButton.userInteractionEnabled = false
+        }
+    }
+
     // MARK: - API Response Methods
     /**
     *  Process notifications after Flickr Client query
@@ -158,10 +165,7 @@ class ViewController: UIViewController {
             if response!["image"] as! String != "" {
 
                 /// Update Buttons
-                self.cancelButton.hidden = true
-                self.cancelButton.userInteractionEnabled = false
-                self.searchButton.hidden = false
-                self.searchButton.userInteractionEnabled = true
+                self.toggleOnCancelButton(false)
                 
                 /// Update Images in UI
                 

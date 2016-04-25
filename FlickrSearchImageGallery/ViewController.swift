@@ -160,15 +160,19 @@ class ViewController: UIViewController {
          */
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
 
+            /// Update Notification in UI
+            dispatch_async(dispatch_get_main_queue(), {
+                self.notificationLabel.text = response?["notification"] as? String
+            })
+            
             // Only process responses where image exists
             if response!["image"] as! String != "" {
 
-                /// Update Buttons, Activity Spinner, and Notification in UI
+                /// Update Buttons, Activity Spinner
 
                 dispatch_async(dispatch_get_main_queue(), {
                     self.activitySpinner.stopAnimating()
                     self.activitySpinner.hidden = true
-                    self.notificationLabel.text = response?["notification"] as? String
                     self.toggleOnCancelButton(false)
                 })
                 
@@ -178,6 +182,7 @@ class ViewController: UIViewController {
                     // Update Image 1
                     if responseImage1 as! String != "" {
                         let imageURL1 = NSURL(string: responseImage1 as! String)
+                        print("-----\(imageURL1)")
                         dispatch_async(dispatch_get_main_queue(), {
                             if let imageData1 = NSData(contentsOfURL: imageURL1!) {
                                 self.flickrImageView1.image = UIImage(data: imageData1)

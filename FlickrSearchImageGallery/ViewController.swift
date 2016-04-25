@@ -330,6 +330,37 @@ class ViewController: UIViewController {
         backgroundView.endEditing(true)
     }
 
+    /**
+     *  Double Tap to reveal Activity View for sharing image via multiple means including email
+     */
+    @IBAction func holdImage1(sender: AnyObject) {
+        if let image1 = self.flickrImage1 {
+            let activityVC = UIActivityViewController(activityItems: [image1] as [UIImage], applicationActivities: nil)
+            self.presentViewController(activityVC, animated: true, completion: nil)
+        }
+    }
+
+    @IBAction func holdImage2(sender: AnyObject) {
+        if let image2 = self.flickrImage2 {
+            let activityVC = UIActivityViewController(activityItems: [image2] as [UIImage], applicationActivities: nil)
+            self.presentViewController(activityVC, animated: true, completion: nil)
+        }
+    }
+
+    @IBAction func holdImage3(sender: AnyObject) {
+        if let image3 = self.flickrImage3 {
+            let activityVC = UIActivityViewController(activityItems: [image3] as [UIImage], applicationActivities: nil)
+            self.presentViewController(activityVC, animated: true, completion: nil)
+        }
+    }
+
+    @IBAction func holdImage4(sender: AnyObject) {
+        if let image4 = self.flickrImage4 {
+            let activityVC = UIActivityViewController(activityItems: [image4] as [UIImage], applicationActivities: nil)
+            self.presentViewController(activityVC, animated: true, completion: nil)
+        }
+    }
+    
     // MARK: - Keyboard Event Subscriber Methods (UIKeyboard Pub/Sub Pattern)
 
     /**

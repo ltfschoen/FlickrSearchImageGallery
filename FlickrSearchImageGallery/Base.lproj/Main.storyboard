@@ -38,7 +38,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysj-yo-C7e">
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysj-yo-C7e">
                                                 <rect key="frame" x="324" y="0.0" width="114" height="33"/>
                                                 <color key="backgroundColor" red="0.32600767845849477" green="0.83875307427585133" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <accessibility key="accessibilityConfiguration" label="Keyword Search"/>
@@ -53,7 +53,7 @@
                                                     <action selector="searchByKeyword:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3a7-Ga-fxx"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mPo-Zt-5TV">
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mPo-Zt-5TV">
                                                 <rect key="frame" x="438" y="0.0" width="112" height="33"/>
                                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
@@ -173,13 +173,18 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LH5-vz-M7G" userLabel="Button 1">
                                                 <rect key="frame" x="0.0" y="0.0" width="53" height="105"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="image1Button"/>
                                                 <connections>
+                                                    <action selector="holdImage1:" destination="BYZ-38-t0r" eventType="touchDown" id="7TE-Fw-za9"/>
+                                                    <action selector="holdImage1:" destination="BYZ-38-t0r" eventType="touchDownRepeat" id="rah-Ic-mET"/>
                                                     <segue destination="viq-Ho-VhQ" kind="presentation" identifier="ImageModalViewControllerID1" id="sUJ-cq-kbE"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s1f-U6-XeS" userLabel="Button 2">
                                                 <rect key="frame" x="53" y="0.0" width="52" height="105"/>
                                                 <connections>
+                                                    <action selector="holdImage2:" destination="BYZ-38-t0r" eventType="touchDown" id="jup-yv-A4y"/>
+                                                    <action selector="holdImage2:" destination="BYZ-38-t0r" eventType="touchDownRepeat" id="kza-AP-zAC"/>
                                                     <segue destination="viq-Ho-VhQ" kind="presentation" identifier="ImageModalViewControllerID2" id="wfW-tp-vou"/>
                                                 </connections>
                                             </button>
@@ -195,12 +200,14 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u7u-8V-Z9a" userLabel="Button 3">
                                                 <rect key="frame" x="0.0" y="0.0" width="53" height="105"/>
                                                 <connections>
+                                                    <action selector="holdImage3:" destination="BYZ-38-t0r" eventType="touchDownRepeat" id="S5R-55-Oli"/>
                                                     <segue destination="viq-Ho-VhQ" kind="presentation" identifier="ImageModalViewControllerID3" id="jV6-OD-leX"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L4A-o5-66e" userLabel="Button 4">
                                                 <rect key="frame" x="53" y="0.0" width="52" height="105"/>
                                                 <connections>
+                                                    <action selector="holdImage4:" destination="BYZ-38-t0r" eventType="touchDownRepeat" id="V4U-US-VRX"/>
                                                     <segue destination="viq-Ho-VhQ" kind="presentation" identifier="ImageModalViewControllerID4" id="8mV-Ny-zi7"/>
                                                 </connections>
                                             </button>
@@ -283,7 +290,7 @@
                         <outlet property="flickrImageNameLabel2" destination="UOD-Gs-QfO" id="p0E-XF-qVu"/>
                         <outlet property="flickrImageNameLabel3" destination="v6S-sf-jjC" id="aAF-az-uei"/>
                         <outlet property="flickrImageNameLabel4" destination="YK1-XO-Edx" id="T7I-ol-oh4"/>
-                        <outlet property="flickrImageThumbView1" destination="SG3-oP-U0g" id="EBD-RB-DTs"/>
+                        <outlet property="flickrImageThumbView1" destination="SG3-oP-U0g" id="q3R-Yx-IIy"/>
                         <outlet property="flickrImageThumbView2" destination="93b-aY-OmY" id="eyp-2f-Gco"/>
                         <outlet property="flickrImageThumbView3" destination="QT4-xV-mdx" id="U1I-2q-VVe"/>
                         <outlet property="flickrImageThumbView4" destination="ZvS-e7-lkV" id="ULn-3S-k8u"/>

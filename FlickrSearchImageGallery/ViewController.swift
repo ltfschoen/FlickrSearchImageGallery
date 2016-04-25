@@ -154,18 +154,23 @@ class ViewController: UIViewController {
 
         print("processFlickrResponse with: \(response)")
 
-        dispatch_async(dispatch_get_main_queue(), {
-
-            self.activitySpinner.stopAnimating()
-            self.activitySpinner.hidden = true
-
-            self.notificationLabel.text = response?["notification"] as? String
+        /**
+         *  Dispatch calls to obtain images from Flickr API response on a background queue
+         *  to keep UI responsive. Use the main queue to update the image view.
+         */
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
 
             // Only process responses where image exists
             if response!["image"] as! String != "" {
 
-                /// Update Buttons
-                self.toggleOnCancelButton(false)
+                /// Update Buttons, Activity Spinner, and Notification in UI
+
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.activitySpinner.stopAnimating()
+                    self.activitySpinner.hidden = true
+                    self.notificationLabel.text = response?["notification"] as? String
+                    self.toggleOnCancelButton(false)
+                })
                 
                 /// Update Images in UI
                 
@@ -173,9 +178,11 @@ class ViewController: UIViewController {
                     // Update Image 1
                     if responseImage1 as! String != "" {
                         let imageURL1 = NSURL(string: responseImage1 as! String)
-                        if let imageData1 = NSData(contentsOfURL: imageURL1!) {
-                            self.flickrImageView1.image = UIImage(data: imageData1)
-                        }
+                        dispatch_async(dispatch_get_main_queue(), {
+                            if let imageData1 = NSData(contentsOfURL: imageURL1!) {
+                                self.flickrImageView1.image = UIImage(data: imageData1)
+                            }
+                        })
                     }
                 }
 
@@ -183,9 +190,11 @@ class ViewController: UIViewController {
                     // Update Image 2
                     if responseImage2 as! String != "" {
                         let imageURL2 = NSURL(string: responseImage2 as! String)
-                        if let imageData2 = NSData(contentsOfURL: imageURL2!) {
-                            self.flickrImageView2.image = UIImage(data: imageData2)
-                        }
+                        dispatch_async(dispatch_get_main_queue(), {
+                            if let imageData2 = NSData(contentsOfURL: imageURL2!) {
+                                self.flickrImageView2.image = UIImage(data: imageData2)
+                            }
+                        })
                     }
                 }
 
@@ -193,9 +202,11 @@ class ViewController: UIViewController {
                     // Update Image 3
                     if responseImage3 as! String != "" {
                         let imageURL3 = NSURL(string: responseImage3 as! String)
-                        if let imageData3 = NSData(contentsOfURL: imageURL3!) {
-                            self.flickrImageView3.image = UIImage(data: imageData3)
-                        }
+                        dispatch_async(dispatch_get_main_queue(), {
+                            if let imageData3 = NSData(contentsOfURL: imageURL3!) {
+                                self.flickrImageView3.image = UIImage(data: imageData3)
+                            }
+                        })
                     }
                 }
 
@@ -203,9 +214,11 @@ class ViewController: UIViewController {
                     // Update Image 4
                     if responseImage4 as! String != "" {
                         let imageURL4 = NSURL(string: responseImage4 as! String)
-                        if let imageData4 = NSData(contentsOfURL: imageURL4!) {
-                            self.flickrImageView4.image = UIImage(data: imageData4)
-                        }
+                        dispatch_async(dispatch_get_main_queue(), {
+                            if let imageData4 = NSData(contentsOfURL: imageURL4!) {
+                                self.flickrImageView4.image = UIImage(data: imageData4)
+                            }
+                        })
                     }
                 }
             }

@@ -19,6 +19,8 @@ let NO_JSON_CALLBACK = "1"
 
 class ViewController: UIViewController {
 
+    var backgroundImageView = UIImageView(frame: UIScreen.mainScreen().bounds)
+
     @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
 
     @IBOutlet weak var flickrImageThumbView1: UIImageView!
@@ -61,6 +63,10 @@ class ViewController: UIViewController {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // Set background image
+        self.setBackgroundImage(self.interfaceOrientation)
+
         subscribeToKeyboardNotifications()
     }
 
@@ -79,6 +85,42 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    // Update to account for rotation when updating background image
+    override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        self.setBackgroundImage(toInterfaceOrientation)
+    }
+
+    // Custom method to set the background image depending on device orientation
+    func setBackgroundImage(orientation: UIInterfaceOrientation) {
+        if (orientation == UIInterfaceOrientation.LandscapeLeft ||
+            orientation == UIInterfaceOrientation.LandscapeRight) {
+            print("Set background to landscape")
+
+            UIGraphicsBeginImageContext(self.view.frame.size)
+            let landscapeImage = UIImage(named: "background_image_landscape")
+            landscapeImage!.drawInRect(self.view.bounds)
+            let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            self.view.backgroundColor = UIColor(patternImage: image)
+
+//            self.backgroundImageView.image = UIImage(named: "background_image_landscape")
+//            self.view.insertSubview(backgroundImageView, atIndex: 0)
+        }
+        else {
+            print("Set background to portrait")
+
+            UIGraphicsBeginImageContext(self.view.frame.size)
+            let portraitImage = UIImage(named: "background_image_portrait")
+            portraitImage!.drawInRect(self.view.bounds)
+            let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            self.view.backgroundColor = UIColor(patternImage: image)
+
+//            self.backgroundImageView.image = UIImage(named: "background_image_portrait")
+//            self.view.insertSubview(backgroundImageView, atIndex: 0)
+        }
     }
 
     @IBAction func cancelKeywordSearch(sender: AnyObject) {

@@ -175,7 +175,6 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="53" height="105"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="image1Button"/>
                                                 <connections>
-                                                    <action selector="holdImage1:" destination="BYZ-38-t0r" eventType="touchDown" id="7TE-Fw-za9"/>
                                                     <action selector="holdImage1:" destination="BYZ-38-t0r" eventType="touchDownRepeat" id="rah-Ic-mET"/>
                                                     <segue destination="viq-Ho-VhQ" kind="presentation" identifier="ImageModalViewControllerID1" id="sUJ-cq-kbE"/>
                                                 </connections>
@@ -183,7 +182,6 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s1f-U6-XeS" userLabel="Button 2">
                                                 <rect key="frame" x="53" y="0.0" width="52" height="105"/>
                                                 <connections>
-                                                    <action selector="holdImage2:" destination="BYZ-38-t0r" eventType="touchDown" id="jup-yv-A4y"/>
                                                     <action selector="holdImage2:" destination="BYZ-38-t0r" eventType="touchDownRepeat" id="kza-AP-zAC"/>
                                                     <segue destination="viq-Ho-VhQ" kind="presentation" identifier="ImageModalViewControllerID2" id="wfW-tp-vou"/>
                                                 </connections>

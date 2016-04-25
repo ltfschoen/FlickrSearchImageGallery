@@ -26,9 +26,15 @@ Development Simulation & Testing Steps
 
     - Note: If the UI becomes unresponsive, please wait whilst the images finish loading.
 
-* Testing
+* Testing and Coverage
 
-  1. Run XCTest from Command Line
+  1. Enable Test Coverage in Xcode 7 (Edit Scheme > Test > Coverage > Gather code coverage > ON)
+
+  2. Run XCTests for Unit Tests and UI Tests by pressing CMD + U
+
+  3. View Coverage results in Report Navigator (Click latest Test > Click Coverage)
+
+  Note: Alternative is to run XCTest from Command Line
 
 ```
 xcodebuild test -project FlickrSearchImageGallery.xcodeproj -scheme FlickrSearchImageGallery -destination 'platform=iOS Simulator,name=iPhone 5s,OS=9.3'

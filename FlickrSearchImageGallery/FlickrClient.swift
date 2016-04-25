@@ -115,7 +115,18 @@ class FlickrClient: NSObject {
             self.flickrRequestTimer!.invalidate()
         }
     }
-    
+
+    // Helper method to prevent repeated requests to previously requested Flickr API pages
+    func checkForDuplicateInRandomPageHistory(rpg: Int) -> Bool {
+        let count = self.randomPageRetryHistory.count
+        for index in 0 ..< count {
+            if self.randomPageRetryHistory[index] == rpg {
+                return true
+            }
+        }
+        return false
+    }
+
     /**
      *  Configure NSTimer to call Flickr request (with page) method each specified time interval
      *  until timer terminated
@@ -134,16 +145,7 @@ class FlickrClient: NSObject {
 
             newRandomPageGenerated = Int(arc4random_uniform(UInt32(self.pageLimit!))) + 1
 
-            func checkForDuplicateInRandomPageHistory(rpg: Int) -> Bool {
-                let count = self.randomPageRetryHistory.count
-                for index in 0 ..< count {
-                    if self.randomPageRetryHistory[index] == rpg {
-                        return true
-                    }
-                }
-                return false
-            }
-            if checkForDuplicateInRandomPageHistory(newRandomPageGenerated!) == false {
+            if self.checkForDuplicateInRandomPageHistory(newRandomPageGenerated!) == false {
                 foundUnique = true
             }
         }

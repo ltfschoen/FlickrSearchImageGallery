@@ -283,10 +283,10 @@
                         <outlet property="flickrImageNameLabel2" destination="UOD-Gs-QfO" id="p0E-XF-qVu"/>
                         <outlet property="flickrImageNameLabel3" destination="v6S-sf-jjC" id="aAF-az-uei"/>
                         <outlet property="flickrImageNameLabel4" destination="YK1-XO-Edx" id="T7I-ol-oh4"/>
-                        <outlet property="flickrImageView1" destination="SG3-oP-U0g" id="vBJ-9F-mda"/>
-                        <outlet property="flickrImageView2" destination="93b-aY-OmY" id="VBZ-rX-uCE"/>
-                        <outlet property="flickrImageView3" destination="QT4-xV-mdx" id="DEt-eM-1VJ"/>
-                        <outlet property="flickrImageView4" destination="ZvS-e7-lkV" id="CEz-rV-ama"/>
+                        <outlet property="flickrImageThumbView1" destination="SG3-oP-U0g" id="EBD-RB-DTs"/>
+                        <outlet property="flickrImageThumbView2" destination="93b-aY-OmY" id="eyp-2f-Gco"/>
+                        <outlet property="flickrImageThumbView3" destination="QT4-xV-mdx" id="U1I-2q-VVe"/>
+                        <outlet property="flickrImageThumbView4" destination="ZvS-e7-lkV" id="ULn-3S-k8u"/>
                         <outlet property="keywordTextField" destination="f8a-zL-G8U" id="jHE-iM-fdP"/>
                         <outlet property="notificationLabel" destination="gVY-nR-Kv3" id="1BD-S1-Hvf"/>
                         <outlet property="searchButton" destination="ysj-yo-C7e" id="A5n-f5-jYE"/>

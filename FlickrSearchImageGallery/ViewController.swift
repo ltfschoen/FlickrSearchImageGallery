@@ -21,10 +21,15 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var activitySpinner: UIActivityIndicatorView!
 
-    @IBOutlet weak var flickrImageView1: UIImageView!
-    @IBOutlet weak var flickrImageView2: UIImageView!
-    @IBOutlet weak var flickrImageView3: UIImageView!
-    @IBOutlet weak var flickrImageView4: UIImageView!
+    @IBOutlet weak var flickrImageThumbView1: UIImageView!
+    @IBOutlet weak var flickrImageThumbView2: UIImageView!
+    @IBOutlet weak var flickrImageThumbView3: UIImageView!
+    @IBOutlet weak var flickrImageThumbView4: UIImageView!
+
+    var flickrImage1: UIImage?
+    var flickrImage2: UIImage?
+    var flickrImage3: UIImage?
+    var flickrImage4: UIImage?
 
     @IBOutlet weak var flickrImageNameLabel1: UILabel!
     @IBOutlet weak var flickrImageNameLabel2: UILabel!
@@ -176,16 +181,65 @@ class ViewController: UIViewController {
                     self.toggleOnCancelButton(false)
                 })
                 
+                /// Update Image Thumbnails in UI
+
+                if let responseImageThumb1 = response!["imageThumb"] {
+                    // Update Image Thumbnail 1
+                    if responseImageThumb1 as! String != "" {
+                        let imageThumbURL1 = NSURL(string: responseImageThumb1 as! String)
+                        dispatch_async(dispatch_get_main_queue(), {
+                            if let imageThumbData1 = NSData(contentsOfURL: imageThumbURL1!) {
+                                self.flickrImageThumbView1.image = UIImage(data: imageThumbData1)
+                            }
+                        })
+                    }
+                }
+
+                if let responseImageThumb2 = response!["imageThumb2"] {
+                    // Update Image Thumbnail 2
+                    if responseImageThumb2 as! String != "" {
+                        let imageThumbURL2 = NSURL(string: responseImageThumb2 as! String)
+                        dispatch_async(dispatch_get_main_queue(), {
+                            if let imageThumbData2 = NSData(contentsOfURL: imageThumbURL2!) {
+                                self.flickrImageThumbView2.image = UIImage(data: imageThumbData2)
+                            }
+                        })
+                    }
+                }
+
+                if let responseImageThumb3 = response!["imageThumb3"] {
+                    // Update Image Thumbnail 3
+                    if responseImageThumb3 as! String != "" {
+                        let imageThumbURL3 = NSURL(string: responseImageThumb3 as! String)
+                        dispatch_async(dispatch_get_main_queue(), {
+                            if let imageThumbData3 = NSData(contentsOfURL: imageThumbURL3!) {
+                                self.flickrImageThumbView3.image = UIImage(data: imageThumbData3)
+                            }
+                        })
+                    }
+                }
+
+                if let responseImageThumb4 = response!["imageThumb4"] {
+                    // Update Image Thumbnail 4
+                    if responseImageThumb4 as! String != "" {
+                        let imageThumbURL4 = NSURL(string: responseImageThumb4 as! String)
+                        dispatch_async(dispatch_get_main_queue(), {
+                            if let imageThumbData4 = NSData(contentsOfURL: imageThumbURL4!) {
+                                self.flickrImageThumbView4.image = UIImage(data: imageThumbData4)
+                            }
+                        })
+                    }
+                }
+                
                 /// Update Images in UI
                 
                 if let responseImage1 = response!["image"] {
                     // Update Image 1
                     if responseImage1 as! String != "" {
                         let imageURL1 = NSURL(string: responseImage1 as! String)
-                        print("-----\(imageURL1)")
                         dispatch_async(dispatch_get_main_queue(), {
                             if let imageData1 = NSData(contentsOfURL: imageURL1!) {
-                                self.flickrImageView1.image = UIImage(data: imageData1)
+                                self.flickrImage1 = UIImage(data: imageData1)!
                             }
                         })
                     }
@@ -197,7 +251,7 @@ class ViewController: UIViewController {
                         let imageURL2 = NSURL(string: responseImage2 as! String)
                         dispatch_async(dispatch_get_main_queue(), {
                             if let imageData2 = NSData(contentsOfURL: imageURL2!) {
-                                self.flickrImageView2.image = UIImage(data: imageData2)
+                                self.flickrImage2 = UIImage(data: imageData2)!
                             }
                         })
                     }
@@ -209,7 +263,7 @@ class ViewController: UIViewController {
                         let imageURL3 = NSURL(string: responseImage3 as! String)
                         dispatch_async(dispatch_get_main_queue(), {
                             if let imageData3 = NSData(contentsOfURL: imageURL3!) {
-                                self.flickrImageView3.image = UIImage(data: imageData3)
+                                self.flickrImage3 = UIImage(data: imageData3)!
                             }
                         })
                     }
@@ -221,7 +275,7 @@ class ViewController: UIViewController {
                         let imageURL4 = NSURL(string: responseImage4 as! String)
                         dispatch_async(dispatch_get_main_queue(), {
                             if let imageData4 = NSData(contentsOfURL: imageURL4!) {
-                                self.flickrImageView4.image = UIImage(data: imageData4)
+                                self.flickrImage4 = UIImage(data: imageData4)!
                             }
                         })
                     }
@@ -340,13 +394,13 @@ class ViewController: UIViewController {
         // Only transition to larger image view if the respective image has been loaded from Flickr
         switch identifier {
         case "ImageModalViewControllerID1":
-            return self.flickrImageView1.image != nil ? true : false
+            return self.flickrImage1 != nil ? true : false
         case "ImageModalViewControllerID2":
-            return self.flickrImageView2.image != nil ? true : false
+            return self.flickrImage2 != nil ? true : false
         case "ImageModalViewControllerID3":
-            return self.flickrImageView3.image != nil ? true : false
+            return self.flickrImage3 != nil ? true : false
         case "ImageModalViewControllerID4":
-            return self.flickrImageView4.image != nil ? true : false
+            return self.flickrImage4 != nil ? true : false
         default:
             return false
         }
@@ -361,32 +415,32 @@ class ViewController: UIViewController {
 
         if segue.identifier == "ImageModalViewControllerID1" {
             if let destinationVC = segue.destinationViewController as? ImageModalViewController {
-                if self.flickrImageView1.image != nil {
-                    destinationVC.copyOfFlickrImage1 = self.flickrImageView1.image
+                if self.flickrImage1 != nil {
+                    destinationVC.copyOfFlickrImage1 = self.flickrImage1!
                     destinationVC.copyOfFlickrImageNameLabel1 = self.flickrImageNameLabel1.text
                     destinationVC.segueSenderID = segue.identifier!
                 }
             }
         } else if segue.identifier == "ImageModalViewControllerID2" {
             if let destinationVC = segue.destinationViewController as? ImageModalViewController {
-                if self.flickrImageView2.image != nil {
-                    destinationVC.copyOfFlickrImage2 = self.flickrImageView2.image
+                if self.flickrImage2 != nil {
+                    destinationVC.copyOfFlickrImage2 = self.flickrImage2!
                     destinationVC.copyOfFlickrImageNameLabel2 = self.flickrImageNameLabel2.text
                     destinationVC.segueSenderID = segue.identifier!
                 }
             }
         } else if segue.identifier == "ImageModalViewControllerID3" {
             if let destinationVC = segue.destinationViewController as? ImageModalViewController {
-                if self.flickrImageView3.image != nil {
-                    destinationVC.copyOfFlickrImage3 = self.flickrImageView3.image
+                if self.flickrImage3 != nil {
+                    destinationVC.copyOfFlickrImage3 = self.flickrImage3!
                     destinationVC.copyOfFlickrImageNameLabel3 = self.flickrImageNameLabel3.text
                     destinationVC.segueSenderID = segue.identifier!
                 }
             }
         } else if segue.identifier == "ImageModalViewControllerID4" {
             if let destinationVC = segue.destinationViewController as? ImageModalViewController {
-                if self.flickrImageView4.image != nil {
-                    destinationVC.copyOfFlickrImage4 = self.flickrImageView4.image
+                if self.flickrImage4 != nil {
+                    destinationVC.copyOfFlickrImage4 = self.flickrImage4!
                     destinationVC.copyOfFlickrImageNameLabel4 = self.flickrImageNameLabel4.text
                     destinationVC.segueSenderID = segue.identifier!
                 }

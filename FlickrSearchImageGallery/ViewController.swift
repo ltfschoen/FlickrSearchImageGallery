@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// Constants
+/// Constants for JSON Endpoint (Private - API Key required)
 let ENDPOINT_URL = "https://api.flickr.com/services/rest/"
 let METHOD_NAME = "flickr.photos.search&"
 let API_KEY = valueForAPIKey(named:"API_KEY_FLICKR")
@@ -16,6 +16,9 @@ let SAFE_SEARCH = "1"
 let EXTRAS = "url_m"
 let DATA_FORMAT = "json"
 let NO_JSON_CALLBACK = "1"
+
+/// Constants for XML Endpoint (Public)
+let ENDPOINT_URL_XML = "https://api.flickr.com/services/feeds/photos_public.gne"
 
 class ViewController: UIViewController {
 
@@ -139,7 +142,33 @@ class ViewController: UIViewController {
             self.notificationLabel.text = "Cancelled."
         })
     }
-    
+
+    // XML Endpoint (no API key required)
+    @IBAction func searchByKeywordXMLEndpoint(sender: AnyObject) {
+
+        print("in searchByKeywordXMLEndpoint")
+        
+        self.notificationLabel.text = ""
+        
+        if keywordTextField.text != "" {
+            let methodArguments = [
+                "text": keywordTextField.text as! AnyObject
+            ]
+            
+            dismissAnyVisibleKeyboard() // Dismiss keyboard before search
+            
+            self.activitySpinner.hidden = false
+            self.activitySpinner.startAnimating()
+            
+            FlickrAPI.sharedInstance.getImageFromFlickrBySearchXMLEndpoint(methodArguments)
+        } else {
+            dispatch_async(dispatch_get_main_queue(), {
+                self.notificationLabel.text = "Error (input empty)."
+            })
+        }
+    }
+
+    // JSON Endpoint
     @IBAction func searchByKeyword(sender: AnyObject) {
         
         self.notificationLabel.text = ""

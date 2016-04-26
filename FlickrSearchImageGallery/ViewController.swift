@@ -150,22 +150,28 @@ class ViewController: UIViewController {
         
         self.notificationLabel.text = ""
         
+        var methodArguments: NSDictionary = [:]
+
+        // Allow empty input field, which signifies a non-tag filtering search
         if keywordTextField.text != "" {
-            let methodArguments = [
+            methodArguments = [
                 "text": keywordTextField.text as! AnyObject
             ]
-            
-            dismissAnyVisibleKeyboard() // Dismiss keyboard before search
-            
-            self.activitySpinner.hidden = false
-            self.activitySpinner.startAnimating()
-            
-            FlickrAPI.sharedInstance.getImageFromFlickrBySearchXMLEndpoint(methodArguments)
         } else {
-            dispatch_async(dispatch_get_main_queue(), {
-                self.notificationLabel.text = "Error (input empty)."
-            })
+            methodArguments = [
+                "text": "" as! AnyObject
+            ]
         }
+        
+        dismissAnyVisibleKeyboard() // Dismiss keyboard before search
+        
+        self.activitySpinner.hidden = false
+        self.activitySpinner.startAnimating()
+        
+        FlickrAPI.sharedInstance.getImageFromFlickrBySearchXMLEndpoint(methodArguments as! [String : AnyObject])
+        
+        // Subscribe to a notification that fires upon Flickr Client response.
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.processFlickrXMLResponse(_:)), name: FlickrClientXMLProcessResponseNotification, object: nil)
     }
 
     // JSON Endpoint
@@ -221,6 +227,31 @@ class ViewController: UIViewController {
     }
 
     // MARK: - API Response Methods
+
+    /**
+     *  Process notifications after Flickr Client XML query
+     */
+    func processFlickrXMLResponse(notification: NSNotification) {
+        
+        let response = notification.object
+        
+        print("processFlickrXMLResponse with: \(response)")
+        
+        /**
+         *  Dispatch calls to obtain images from Flickr XML API response on background queue
+         *  to keep UI responsive. Use the main queue to update the image view.
+         */
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            
+            /// Update Notification in UI
+            dispatch_async(dispatch_get_main_queue(), {
+                self.notificationLabel.text = response?["notification"] as? String
+            })
+            
+            // TODO
+        })
+    }
+    
     /**
     *  Process notifications after Flickr Client query
     */

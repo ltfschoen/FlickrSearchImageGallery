@@ -52,7 +52,6 @@ class FlickrSearchImageGalleryUITests: XCTestCase {
         /// When
 
         keywordTextField.tap()
-        keywordTextField.typeText(keywordEntered)
         app.buttons["Keyword Search"].tap()
 
         /// Then

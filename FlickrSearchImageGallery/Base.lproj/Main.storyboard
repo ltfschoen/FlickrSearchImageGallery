@@ -25,8 +25,8 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Qe2-sR-6Zg" userLabel="Stack View - S">
                                         <rect key="frame" x="5" y="5" width="550" height="33"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Keyword(s)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f8a-zL-G8U">
-                                                <rect key="frame" x="0.0" y="0.0" width="236" height="33"/>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Tag(s)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f8a-zL-G8U">
+                                                <rect key="frame" x="0.0" y="0.0" width="197" height="33"/>
                                                 <color key="backgroundColor" red="0.61672810300000003" green="0.91250394570000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <accessibility key="accessibilityConfiguration" label="Keyword Entered"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -38,10 +38,10 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysj-yo-C7e">
-                                                <rect key="frame" x="236" y="0.0" width="158" height="33"/>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysj-yo-C7e">
+                                                <rect key="frame" x="197" y="0.0" width="177" height="33"/>
                                                 <color key="backgroundColor" red="0.32600767845849477" green="0.83875307427585133" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <accessibility key="accessibilityConfiguration" label="Keyword Search"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="KeywordSearch" label="Keyword Search"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                 <state key="normal" title="Search JSON"/>
                                                 <userDefinedRuntimeAttributes>
@@ -53,8 +53,8 @@
                                                     <action selector="searchByKeyword:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3a7-Ga-fxx"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mPo-Zt-5TV">
-                                                <rect key="frame" x="394" y="0.0" width="156" height="33"/>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mPo-Zt-5TV">
+                                                <rect key="frame" x="374" y="0.0" width="176" height="33"/>
                                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                 <state key="normal" title="Cancel JSON">

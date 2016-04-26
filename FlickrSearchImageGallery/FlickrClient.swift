@@ -12,7 +12,7 @@ import Foundation
 public let FlickrClientProcessResponseNotification = "FlickrClientProcessResponseNotification"
 
 /**
- *  Flickr Client class to perform communication with Flickr API
+ *  Flickr Client class to perform communication with Flickr API's JSON Endpoint
  */
 class FlickrClient: NSObject {
     

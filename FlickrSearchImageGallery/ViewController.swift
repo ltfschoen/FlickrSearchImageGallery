@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// Constants
+/// Constants for JSON Endpoint (Private - API Key required)
 let ENDPOINT_URL = "https://api.flickr.com/services/rest/"
 let METHOD_NAME = "flickr.photos.search&"
 let API_KEY = valueForAPIKey(named:"API_KEY_FLICKR")
@@ -16,6 +16,9 @@ let SAFE_SEARCH = "1"
 let EXTRAS = "url_m"
 let DATA_FORMAT = "json"
 let NO_JSON_CALLBACK = "1"
+
+/// Constants for XML Endpoint (Public)
+let ENDPOINT_URL_XML = "https://api.flickr.com/services/feeds/photos_public.gne"
 
 class ViewController: UIViewController {
 
@@ -139,7 +142,39 @@ class ViewController: UIViewController {
             self.notificationLabel.text = "Cancelled."
         })
     }
-    
+
+    // XML Endpoint (no API key required)
+    @IBAction func searchByKeywordXMLEndpoint(sender: AnyObject) {
+
+        print("in searchByKeywordXMLEndpoint")
+        
+        self.notificationLabel.text = ""
+        
+        var methodArguments: NSDictionary = [:]
+
+        // Allow empty input field, which signifies a non-tag filtering search
+        if keywordTextField.text != "" {
+            methodArguments = [
+                "text": keywordTextField.text as! AnyObject
+            ]
+        } else {
+            methodArguments = [
+                "text": "" as! AnyObject
+            ]
+        }
+        
+        dismissAnyVisibleKeyboard() // Dismiss keyboard before search
+        
+        self.activitySpinner.hidden = false
+        self.activitySpinner.startAnimating()
+        
+        FlickrAPI.sharedInstance.getImageFromFlickrBySearchXMLEndpoint(methodArguments as! [String : AnyObject])
+        
+        // Subscribe to a notification that fires upon Flickr Client response.
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.processFlickrXMLResponse(_:)), name: FlickrClientXMLProcessResponseNotification, object: nil)
+    }
+
+    // JSON Endpoint
     @IBAction func searchByKeyword(sender: AnyObject) {
         
         self.notificationLabel.text = ""
@@ -192,6 +227,31 @@ class ViewController: UIViewController {
     }
 
     // MARK: - API Response Methods
+
+    /**
+     *  Process notifications after Flickr Client XML query
+     */
+    func processFlickrXMLResponse(notification: NSNotification) {
+        
+        let response = notification.object
+        
+        print("processFlickrXMLResponse with: \(response)")
+        
+        /**
+         *  Dispatch calls to obtain images from Flickr XML API response on background queue
+         *  to keep UI responsive. Use the main queue to update the image view.
+         */
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            
+            /// Update Notification in UI
+            dispatch_async(dispatch_get_main_queue(), {
+                self.notificationLabel.text = response?["notification"] as? String
+            })
+            
+            // TODO
+        })
+    }
+    
     /**
     *  Process notifications after Flickr Client query
     */

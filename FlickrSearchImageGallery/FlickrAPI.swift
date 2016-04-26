@@ -20,16 +20,24 @@ class FlickrAPI: NSObject {
     // MARK: Private Properties
 
     private let flickrClient: FlickrClient
+    private let flickrClientXML: FlickrClientXML
 
     // MARK: Initialisation
     
     override init() {
         flickrClient = FlickrClient()
+        flickrClientXML = FlickrClientXML()
         super.init()
     }
     
     // MARK: - API Search Methods
 
+    // XML Endpoint
+    func getImageFromFlickrBySearchXMLEndpoint(methodArguments: [String : AnyObject]) {
+        flickrClientXML.getImageFromFlickrBySearchXMLEndpoint(methodArguments)
+    }
+    
+    // JSON Endpoint
     func getImageFromFlickrBySearch(methodArguments: [String : AnyObject]) {
         flickrClient.getImageFromFlickrBySearch(methodArguments)
     }

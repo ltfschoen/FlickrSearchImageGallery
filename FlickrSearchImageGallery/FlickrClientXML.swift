@@ -115,13 +115,13 @@ class FlickrClientXML: NSObject, NSXMLParserDelegate {
      *  progressively appends characters contained within the key to a
      *  predefined variable.
      */
-    func parser(parser: NSXMLParser, foundCharacters string: String?) {
+    func parser(parser: NSXMLParser, foundCharacters string: String) {
         
         // Check current element being parsed
         if self.element.isEqualToString("id") {
-            self.id.appendString(string!)
+            self.id.appendString(string)
         } else if self.element.isEqualToString("title") {
-            self.title.appendString(string!)
+            self.title.appendString(string)
         }
 
     }
@@ -169,7 +169,7 @@ class FlickrClientXML: NSObject, NSXMLParserDelegate {
     func parserDidEndDocument(parser: NSXMLParser) {
         print("Entries: \(self.entries)")
         
-        var imagesParsed = self.entries as! NSMutableArray
+        let imagesParsed = self.entries
 
         // Remove images where metadata does not contain any tag(s) given by user
         let imagesParsedWithTags: NSMutableArray = self.filterByImagesMatchingGivenTags(imagesParsed, searchTermArr: self.searchTermArr)
@@ -194,11 +194,6 @@ class FlickrClientXML: NSObject, NSXMLParserDelegate {
         }
         print("Flickr Images: \(self.flickrImages)")
 
-        
-//        self.imagesCount = imagesParsedWithTags.count
-//        print("image dictionaries count is: \(self.imagesCount)")
-//        Int(arc4random_uniform(UInt32(self.pageLimit!))) + 1
-
         NSNotificationCenter.defaultCenter().postNotificationName(FlickrClientXMLProcessResponseNotification, object: imagesParsedWithTags)
     }
     
@@ -209,13 +204,13 @@ class FlickrClientXML: NSObject, NSXMLParserDelegate {
     func filterByImagesMatchingGivenTags(imagesParsed: NSMutableArray, searchTermArr: Array<String>) -> NSMutableArray {
         
         // Immediately return with same parsed values if no search input field tags provided
-        guard self.searchTerm != nil else { return imagesParsed }
+        guard self.searchTerm?.length != 0 else { return imagesParsed }
 
         // Split Flickr tags (entered into the search input field) into an array
         self.searchTermArr = self.searchTerm!.componentsSeparatedByString(" ")
         
         // Deep Copy of parsing results for manipulation
-        var copyOfImagesParsed: NSMutableArray = NSMutableArray(array: imagesParsed as [AnyObject], copyItems: true)
+        let copyOfImagesParsed: NSMutableArray = NSMutableArray(array: imagesParsed as [AnyObject], copyItems: true)
         
         // Avoid index out of bounds error
         var countRemovedFromImagesParsedWithTags = 0

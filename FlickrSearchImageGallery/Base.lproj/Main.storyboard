@@ -26,7 +26,7 @@
                                         <rect key="frame" x="5" y="5" width="550" height="33"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Tag(s)" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f8a-zL-G8U">
-                                                <rect key="frame" x="0.0" y="0.0" width="197" height="33"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="202" height="33"/>
                                                 <color key="backgroundColor" red="0.61672810300000003" green="0.91250394570000004" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <accessibility key="accessibilityConfiguration" label="Keyword Entered"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -39,11 +39,11 @@
                                                 </userDefinedRuntimeAttributes>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysj-yo-C7e">
-                                                <rect key="frame" x="197" y="0.0" width="177" height="33"/>
+                                                <rect key="frame" x="202" y="0.0" width="134" height="33"/>
                                                 <color key="backgroundColor" red="0.32600767845849477" green="0.83875307427585133" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="KeywordSearch" label="Keyword Search"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                                <state key="normal" title="Search JSON"/>
+                                                <state key="normal" title="    JSON    "/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                         <integer key="value" value="17"/>
@@ -54,10 +54,10 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mPo-Zt-5TV">
-                                                <rect key="frame" x="374" y="0.0" width="176" height="33"/>
+                                                <rect key="frame" x="336" y="0.0" width="94" height="33"/>
                                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                                <state key="normal" title="Cancel JSON">
+                                                <state key="normal" title="Cancel">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <userDefinedRuntimeAttributes>
@@ -69,24 +69,24 @@
                                                     <action selector="cancelKeywordSearch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MVb-fL-rcF"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VjZ-JO-WZa">
+                                                <rect key="frame" x="430" y="0.0" width="120" height="33"/>
+                                                <color key="backgroundColor" red="1" green="0.54407490720002449" blue="0.78969050051845513" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                <state key="normal" title="    XML    ">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="17"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="searchByKeywordXMLEndpoint:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1EG-WI-jZn"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VjZ-JO-WZa">
-                                        <rect key="frame" x="452" y="38" width="109" height="33"/>
-                                        <color key="backgroundColor" red="1" green="0.54407490720002449" blue="0.78969050051845513" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                        <state key="normal" title=" Search  XML ">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="17"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="searchByKeywordXMLEndpoint:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1EG-WI-jZn"/>
-                                        </connections>
-                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gVY-nR-Kv3">
                                         <rect key="frame" x="8" y="43" width="544" height="0.0"/>
                                         <accessibility key="accessibilityConfiguration" label="Notification Label"/>
@@ -243,7 +243,6 @@
                                     <constraint firstItem="2V5-8m-QR1" firstAttribute="leading" secondItem="yhx-8J-O7G" secondAttribute="leadingMargin" id="7Kd-Fj-bkm"/>
                                     <constraint firstItem="Qe2-sR-6Zg" firstAttribute="centerX" secondItem="yhx-8J-O7G" secondAttribute="centerX" id="8aw-sA-Qf0"/>
                                     <constraint firstItem="2V5-8m-QR1" firstAttribute="top" secondItem="1NL-99-5r0" secondAttribute="bottom" id="Ata-2q-N7a"/>
-                                    <constraint firstItem="VjZ-JO-WZa" firstAttribute="top" secondItem="Qe2-sR-6Zg" secondAttribute="bottom" id="Mho-oX-1Jz"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="gVY-nR-Kv3" secondAttribute="trailing" id="Nw1-w5-5dt"/>
                                     <constraint firstItem="2V5-8m-QR1" firstAttribute="top" secondItem="1NL-99-5r0" secondAttribute="bottom" constant="5" id="ORZ-Fs-z2I"/>
                                     <constraint firstItem="YsB-ye-MPd" firstAttribute="leading" secondItem="yhx-8J-O7G" secondAttribute="leadingMargin" id="OaO-GX-g3i"/>
@@ -291,7 +290,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="VjZ-JO-WZa" secondAttribute="trailing" constant="5" id="4zW-cs-FAB"/>
                             <constraint firstItem="yhx-8J-O7G" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="cNe-Oe-o7M"/>
                             <constraint firstAttribute="trailingMargin" secondItem="yhx-8J-O7G" secondAttribute="trailing" id="fCt-TB-F9S"/>
                             <constraint firstItem="yhx-8J-O7G" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="uh5-ag-UeK"/>
@@ -313,6 +311,7 @@
                         <outlet property="keywordTextField" destination="f8a-zL-G8U" id="jHE-iM-fdP"/>
                         <outlet property="notificationLabel" destination="gVY-nR-Kv3" id="1BD-S1-Hvf"/>
                         <outlet property="searchButton" destination="ysj-yo-C7e" id="A5n-f5-jYE"/>
+                        <outlet property="xmlButton" destination="VjZ-JO-WZa" id="1E5-eL-d2Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

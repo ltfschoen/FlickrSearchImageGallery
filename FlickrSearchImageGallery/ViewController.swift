@@ -45,6 +45,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var xmlButton: UIButton!
     
     @IBOutlet weak var notificationLabel: UILabel!
     @IBOutlet var backgroundView: UIView!
@@ -150,6 +151,8 @@ class ViewController: UIViewController {
         
         self.notificationLabel.text = ""
         
+        self.toggleOnXMLState(true)
+
         var methodArguments: NSDictionary = [:]
 
         // Allow empty input field, which signifies a non-tag filtering search
@@ -159,7 +162,7 @@ class ViewController: UIViewController {
             ]
         } else {
             methodArguments = [
-                "text": "" as! AnyObject
+                "text": "" as AnyObject
             ]
         }
         
@@ -218,11 +221,33 @@ class ViewController: UIViewController {
             self.cancelButton.userInteractionEnabled = false
             self.searchButton.hidden = false
             self.searchButton.userInteractionEnabled = true
+            self.xmlButton.hidden = false
+            self.xmlButton.userInteractionEnabled = true
         } else if state == true {
             self.cancelButton.hidden = false
             self.cancelButton.userInteractionEnabled = true
             self.searchButton.hidden = true
             self.searchButton.userInteractionEnabled = false
+            self.xmlButton.hidden = true
+            self.xmlButton.userInteractionEnabled = false
+        }
+    }
+
+    func toggleOnXMLState(state: Bool) {
+        if state == false {
+            self.cancelButton.hidden = true
+            self.cancelButton.userInteractionEnabled = false
+            self.searchButton.hidden = false
+            self.searchButton.userInteractionEnabled = true
+            self.xmlButton.hidden = false
+            self.xmlButton.userInteractionEnabled = true
+        } else if state == true {
+            self.cancelButton.hidden = false
+            self.cancelButton.userInteractionEnabled = true
+            self.searchButton.hidden = true
+            self.searchButton.userInteractionEnabled = false
+            self.xmlButton.hidden = true
+            self.xmlButton.userInteractionEnabled = false
         }
     }
 
@@ -233,23 +258,145 @@ class ViewController: UIViewController {
      */
     func processFlickrXMLResponse(notification: NSNotification) {
         
-        let response = notification.object
+        let response: [NSDictionary] = notification.object as! [NSDictionary]
         
         print("processFlickrXMLResponse with: \(response)")
+
+        /// Update Buttons, Activity Spinner
         
-        /**
-         *  Dispatch calls to obtain images from Flickr XML API response on background queue
-         *  to keep UI responsive. Use the main queue to update the image view.
-         */
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-            
-            /// Update Notification in UI
-            dispatch_async(dispatch_get_main_queue(), {
-                self.notificationLabel.text = response?["notification"] as? String
-            })
-            
-            // TODO
+        dispatch_async(dispatch_get_main_queue(), {
+            self.activitySpinner.stopAnimating()
+            self.activitySpinner.hidden = true
+            self.toggleOnXMLState(false)
         })
+
+        let imagesCount = response.count
+        print("image dictionaries count is: \(imagesCount)")
+
+        if imagesCount == 0 {
+            
+            self.notificationLabel.text = "Error: No images found. Try JSON or without tag(s)."
+
+        } else if imagesCount != 0 {
+            
+            self.notificationLabel.text = "Success: Found \(imagesCount) images. Showing 4 random."
+
+            /**
+             *  Dispatch calls to obtain images from Flickr XML API response on background queue
+             *  to keep UI responsive. Use the main queue to update the image view.
+             */
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                
+                /// Update Notification in UI
+    //            dispatch_async(dispatch_get_main_queue(), {
+    //                self.notificationLabel.text = response["notification"] as? String
+    //            })
+
+                // Generate Random indexes to get 4 random images from the array
+                let randomImageIndex1 = Int(arc4random_uniform(UInt32(imagesCount-1))) + 1
+                let randomImageIndex2 = Int(arc4random_uniform(UInt32(imagesCount-1))) + 1
+                let randomImageIndex3 = Int(arc4random_uniform(UInt32(imagesCount-1))) + 1
+                let randomImageIndex4 = Int(arc4random_uniform(UInt32(imagesCount-1))) + 1
+                print("random indexes are: \(randomImageIndex1),\(randomImageIndex2),\(randomImageIndex3),\(randomImageIndex4)")
+                    
+                /// Update UI
+
+                if response[randomImageIndex1]["title"] != nil {
+                    self.flickrImageNameLabel1.text = response[randomImageIndex1]["title"] as? String
+                }
+                if response[randomImageIndex2]["title"] != nil {
+                    self.flickrImageNameLabel2.text = response[randomImageIndex2]["title"] as? String
+                }
+                if response[randomImageIndex3]["title"] != nil {
+                    self.flickrImageNameLabel3.text = response[randomImageIndex3]["title"] as? String
+                }
+                if response[randomImageIndex4]["title"] != nil {
+                    self.flickrImageNameLabel4.text = response[randomImageIndex4]["title"] as? String
+                }
+                
+//                // Thumbnails
+//                if response[randomImageIndex1]["image_thumb"] != nil {
+//                    let responseImageThumbURL1 = NSURL(string: response[randomImageIndex1]["image_thumb"] as! String)
+//                    dispatch_async(dispatch_get_main_queue(), {
+//                        if let responseImageThumbData1 = NSData(contentsOfURL: responseImageThumbURL1!) {
+//                            self.flickrImageThumbView1.image = UIImage(data: responseImageThumbData1)
+//                        }
+//                    })
+//                }
+//                    
+//                if response[randomImageIndex2]["image_thumb"] != nil {
+//                    let responseImageThumbURL2 = NSURL(string: response[randomImageIndex2]["image_thumb"] as! String)
+//                    dispatch_async(dispatch_get_main_queue(), {
+//                        if let responseImageThumbData2 = NSData(contentsOfURL: responseImageThumbURL2!) {
+//                            self.flickrImageThumbView2.image = UIImage(data: responseImageThumbData2)
+//                        }
+//                    })
+//                }
+//                
+//                if response[randomImageIndex3]["image_thumb"] != nil {
+//                    let responseImageThumbURL3 = NSURL(string: response[randomImageIndex3]["image_thumb"] as! String)
+//                    dispatch_async(dispatch_get_main_queue(), {
+//                        if let responseImageThumbData3 = NSData(contentsOfURL: responseImageThumbURL3!) {
+//                            self.flickrImageThumbView3.image = UIImage(data: responseImageThumbData3)
+//                        }
+//                    })
+//                }
+//                
+//                if response[randomImageIndex4]["image_thumb"] != nil {
+//                    let responseImageThumbURL4 = NSURL(string: response[randomImageIndex4]["image_thumb"] as! String)
+//                    dispatch_async(dispatch_get_main_queue(), {
+//                        if let responseImageThumbData4 = NSData(contentsOfURL: responseImageThumbURL4!) {
+//                            self.flickrImageThumbView4.image = UIImage(data: responseImageThumbData4)
+//                        }
+//                    })
+//                }
+                
+                // Big images
+                if response[randomImageIndex1]["image_big"] != nil {
+                    let responseImageBigURL1 = NSURL(string: response[randomImageIndex1]["image_big"] as! String)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        if let responseImageBigData1 = NSData(contentsOfURL: responseImageBigURL1!) {
+                            self.flickrImage1 = UIImage(data: responseImageBigData1)
+                            // Hack as thumbs are failing to display
+                            self.flickrImageThumbView1.image = UIImage(data: responseImageBigData1)
+                        }
+                    })
+                }
+                
+                if response[randomImageIndex2]["image_big"] != nil {
+                    let responseImageBigURL2 = NSURL(string: response[randomImageIndex2]["image_big"] as! String)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        if let responseImageBigData2 = NSData(contentsOfURL: responseImageBigURL2!) {
+                            self.flickrImage2 = UIImage(data: responseImageBigData2)
+                            // Hack as thumbs are failing to display
+                            self.flickrImageThumbView2.image = UIImage(data: responseImageBigData2)
+                        }
+                    })
+                }
+
+                if response[randomImageIndex3]["image_big"] != nil {
+                    let responseImageBigURL3 = NSURL(string: response[randomImageIndex3]["image_big"] as! String)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        if let responseImageBigData3 = NSData(contentsOfURL: responseImageBigURL3!) {
+                            self.flickrImage3 = UIImage(data: responseImageBigData3)
+                            // Hack as thumbs are failing to display
+                            self.flickrImageThumbView3.image = UIImage(data: responseImageBigData3)
+                        }
+                    })
+                }
+
+                if response[randomImageIndex4]["image_big"] != nil {
+                    let responseImageBigURL4 = NSURL(string: response[randomImageIndex4]["image_big"] as! String)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        if let responseImageBigData4 = NSData(contentsOfURL: responseImageBigURL4!) {
+                            self.flickrImage4 = UIImage(data: responseImageBigData4)
+                            // Hack as thumbs are failing to display
+                            self.flickrImageThumbView4.image = UIImage(data: responseImageBigData4)
+                        }
+                    })
+                }
+            })
+        }
     }
     
     /**

@@ -48,6 +48,13 @@ class FlickrAPI: NSObject {
     }
 
     func cancelKeywordSearch() {
+
+        // Cancel XML
+        if flickrClientXML.flickrTaskXML != nil {
+            flickrClientXML.flickrTaskXML!.cancel()
+        }
+        
+        // Cancel JSON
         if flickrClient.flickrTask != nil {
             flickrClient.flickrTask!.cancel()
         }
